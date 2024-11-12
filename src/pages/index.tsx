@@ -149,7 +149,7 @@ const Welcome: React.FC = () => {
             />
             <InfoCard
               index={3}
-              title="了解 Pro Components"
+              title="了解 ProComponents"
               href="https://procomponents.ant.design"
               desc="ProComponents 是一个基于 Ant Design 做了更高抽象的模板组件，以 一个组件就是一个页面为开发理念，为中后台开发带来更好的体验。"
             />

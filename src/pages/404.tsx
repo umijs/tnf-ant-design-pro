@@ -24,6 +24,7 @@ const NoFoundPage: React.FC = () => {
     />
   );
 };
+
 export const Route = createFileRoute('/404')({
   component: NoFoundPage,
 });

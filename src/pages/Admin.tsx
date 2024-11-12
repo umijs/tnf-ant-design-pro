@@ -47,6 +47,7 @@ const Admin: React.FC = () => {
     </PageContainer>
   );
 };
-export const Route = createFileRoute('/Admin')({
+
+export const Route = createFileRoute('/admin')({
   component: Admin,
 });

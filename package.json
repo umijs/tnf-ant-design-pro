@@ -10,7 +10,6 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "preview": "npm run build && tnf preview",
-    "start": "npm run dev",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {

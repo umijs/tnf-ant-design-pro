@@ -16,14 +16,14 @@ import {
 } from '@ant-design/pro-components';
 import { createFileRoute } from '@umijs/tnf/router';
 import { Button, Drawer, Input, message } from 'antd';
-import type { FormValueType } from '../../components/UpdateForm';
-import UpdateForm from '../../components/UpdateForm';
+import type { FormValueType } from '../components/UpdateForm';
+import UpdateForm from '../components/UpdateForm';
 import {
   addRule,
   removeRule,
   rule,
   updateRule,
-} from '../../services/ant-design-pro/api';
+} from '../services/ant-design-pro/api';
 
 /**
  * @en-US Add node
@@ -336,6 +336,7 @@ const TableList: React.FC = () => {
     </PageContainer>
   );
 };
-export const Route = createFileRoute('/TableList/')({
+
+export const Route = createFileRoute('/list/table-list')({
   component: TableList,
 });

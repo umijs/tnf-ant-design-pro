@@ -6,9 +6,9 @@ export default [
   // },
   { path: '/', name: '欢迎', icon: 'smile' },
   {
-    path: '/Admin',
+    path: '/admin',
     name: '管理页',
     icon: 'crown',
   },
-  { name: '查询表格', icon: 'table', path: '/TableList' },
+  { name: '查询表格', icon: 'table', path: '/list/table-list' },
 ];
