@@ -3,7 +3,6 @@
 .dockerignore
 .DS_Store
 .eslintignore
-*.png
 *.toml
 .editorconfig
 .gitignore
@@ -12,3 +11,4 @@ LICENSE
 .eslintcache
 *.lock
 .history
+pnpm-lock.yaml
