@@ -209,7 +209,6 @@ const TableList: React.FC = () => {
   };
   const search = Route.useSearch();
   const navigate = useNavigate();
-  console.log(data, search);
 
   return (
     <PageContainer>
