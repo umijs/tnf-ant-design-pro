@@ -15,12 +15,7 @@ import {
   ProFormTextArea,
   ProTable,
 } from '@ant-design/pro-components';
-import {
-  Link,
-  createFileRoute,
-  useNavigate,
-  useRouter,
-} from '@umijs/tnf/router';
+import { Link, createFileRoute, useNavigate } from '@umijs/tnf/router';
 import { Button, Drawer, Input, message } from 'antd';
 import { z } from 'zod';
 import type { FormValueType } from '../components/UpdateForm';
@@ -216,28 +211,6 @@ const TableList: React.FC = () => {
   };
   const search = Route.useSearch();
   const navigate = useNavigate();
-  const router = useRouter();
-
-  const handlePageChange = (page: number, pageSize: number = 20) => {
-    router.navigate({
-      to: '/list/table-list',
-      search: {
-        ...search,
-        current: page,
-        pageSize,
-      },
-    });
-  };
-  const handlePageHoverPreload = (page: number) => {
-    router.preloadRoute({
-      to: '/list/table-list',
-      search: {
-        ...search,
-        current: page,
-        pageSize: search.pageSize,
-      },
-    });
-  };
 
   useEffect(() => {
     formRef?.current.setFieldsValue(search);
@@ -276,33 +249,33 @@ const TableList: React.FC = () => {
           total,
           current: search.current || 1,
           pageSize: search.pageSize || 20,
+          onShowSizeChange: (current, size) => {
+            navigate({
+              to: '/list/table-list',
+              search: {
+                ...search,
+                current,
+                pageSize: size,
+              },
+            });
+          },
           itemRender: (page, type, originalElement) => {
             if (type === 'page') {
               return (
-                // <Link
-                //   to="/list/table-list"
-                //   preload="intent"
-                //   search={{
-                //     current: search.current || 1,
-                //     pageSize: search.pageSize || 20,
-                //   }}
-                // >
-                //   {page}
-                // </Link>
-                <a
-                  onMouseEnter={() => handlePageHoverPreload(page)}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePageChange(page);
+                <Link
+                  to="/list/table-list"
+                  preload="intent"
+                  search={{
+                    current: page || 1,
+                    pageSize: search.pageSize || 20,
                   }}
                 >
                   {page}
-                </a>
+                </Link>
               );
             }
             return originalElement;
           },
-          onChange: handlePageChange,
         }}
         onSubmit={(params) => {
           navigate({
