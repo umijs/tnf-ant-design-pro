@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
+  FormInstance,
   ProColumns,
   ProDescriptionsItemProps,
 } from '@ant-design/pro-components';
@@ -14,7 +15,12 @@ import {
   ProFormTextArea,
   ProTable,
 } from '@ant-design/pro-components';
-import { createFileRoute, useNavigate } from '@umijs/tnf/router';
+import {
+  Link,
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from '@umijs/tnf/router';
 import { Button, Drawer, Input, message } from 'antd';
 import { z } from 'zod';
 import type { FormValueType } from '../components/UpdateForm';
@@ -106,6 +112,7 @@ const TableList: React.FC = () => {
   const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
+  const formRef = useRef<FormInstance>();
   const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
   const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
 
@@ -209,12 +216,39 @@ const TableList: React.FC = () => {
   };
   const search = Route.useSearch();
   const navigate = useNavigate();
+  const router = useRouter();
+
+  const handlePageChange = (page: number, pageSize: number = 20) => {
+    router.navigate({
+      to: '/list/table-list',
+      search: {
+        ...search,
+        current: page,
+        pageSize,
+      },
+    });
+  };
+  const handlePageHoverPreload = (page: number) => {
+    router.preloadRoute({
+      to: '/list/table-list',
+      search: {
+        ...search,
+        current: page,
+        pageSize: search.pageSize,
+      },
+    });
+  };
+
+  useEffect(() => {
+    formRef?.current.setFieldsValue(search);
+  }, [formRef, search]);
 
   return (
     <PageContainer>
       <ProTable<API.RuleListItem, API.PageParams>
         headerTitle={'查询表格'}
         actionRef={actionRef}
+        formRef={formRef}
         rowKey="key"
         search={{
           labelWidth: 120,
@@ -242,19 +276,35 @@ const TableList: React.FC = () => {
           total,
           current: search.current || 1,
           pageSize: search.pageSize || 20,
-          onChange: (page, pageSize) => {
-            navigate({
-              to: '/list/table-list',
-              search: {
-                ...search,
-                current: page,
-                pageSize,
-              },
-            });
+          itemRender: (page, type, originalElement) => {
+            if (type === 'page') {
+              return (
+                // <Link
+                //   to="/list/table-list"
+                //   preload="intent"
+                //   search={{
+                //     current: search.current || 1,
+                //     pageSize: search.pageSize || 20,
+                //   }}
+                // >
+                //   {page}
+                // </Link>
+                <a
+                  onMouseEnter={() => handlePageHoverPreload(page)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(page);
+                  }}
+                >
+                  {page}
+                </a>
+              );
+            }
+            return originalElement;
           },
+          onChange: handlePageChange,
         }}
         onSubmit={(params) => {
-          console.log('params', params);
           navigate({
             to: '/list/table-list',
             search: {
