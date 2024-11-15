@@ -4,6 +4,6 @@ module.exports = {
   trailingComma: 'all',
   proseWrap: 'never',
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: ['^react', '^@?\\w', '^@/', '^[./]'],
+  importOrder: ['^react', '^@umijs/tnf/?', '^@?\\w', '^@/', '^[./]'],
   importOrderSortSpecifiers: true,
 };

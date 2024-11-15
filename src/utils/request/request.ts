@@ -2,7 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 // @ts-nocheck
-import useUmiRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import axios, {
   type AxiosError,
   type AxiosInstance,
@@ -10,77 +9,8 @@ import axios, {
   type AxiosResponse,
 } from 'axios';
 import { errorConfig } from './requestErrorConfig';
-import {
-  BaseOptions,
-  BasePaginatedOptions,
-  BaseResult,
-  CombineService,
-  LoadMoreFormatReturn,
-  LoadMoreOptions,
-  LoadMoreOptionsWithFormat,
-  LoadMoreParams,
-  LoadMoreResult,
-  OptionsWithFormat,
-  PaginatedFormatReturn,
-  PaginatedOptionsWithFormat,
-  PaginatedParams,
-  PaginatedResult,
-} from '/Users/congxiaochen/Downloads/ant-design-pro-master/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@18.3.1/node_modules/@ahooksjs/use-request/es/types';
 
 type ResultWithData<T = any> = { data?: T; [key: string]: any };
-
-function useRequest<
-  R = any,
-  P extends any[] = any,
-  U = any,
-  UU extends U = any,
->(
-  service: CombineService<R, P>,
-  options: OptionsWithFormat<R, P, U, UU>,
-): BaseResult<U, P>;
-function useRequest<R extends ResultWithData = any, P extends any[] = any>(
-  service: CombineService<R, P>,
-  options?: BaseOptions<R['data'], P>,
-): BaseResult<R['data'], P>;
-function useRequest<R extends LoadMoreFormatReturn = any, RR = any>(
-  service: CombineService<RR, LoadMoreParams<R>>,
-  options: LoadMoreOptionsWithFormat<R, RR>,
-): LoadMoreResult<R>;
-function useRequest<
-  R extends ResultWithData<LoadMoreFormatReturn | any> = any,
-  RR extends R = any,
->(
-  service: CombineService<R, LoadMoreParams<R['data']>>,
-  options: LoadMoreOptions<RR['data']>,
-): LoadMoreResult<R['data']>;
-
-function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<R, PaginatedParams>,
-  options: PaginatedOptionsWithFormat<R, Item, U>,
-): PaginatedResult<Item>;
-function useRequest<Item = any, U extends Item = any>(
-  service: CombineService<
-    ResultWithData<PaginatedFormatReturn<Item>>,
-    PaginatedParams
-  >,
-  options: BasePaginatedOptions<U>,
-): PaginatedResult<Item>;
-function useRequest(service: any, options: any = {}) {
-  return useUmiRequest(service, {
-    formatResult: (result) => result?.data,
-    requestMethod: (requestOptions: any) => {
-      if (typeof requestOptions === 'string') {
-        return request(requestOptions);
-      }
-      if (typeof requestOptions === 'object') {
-        const { url, ...rest } = requestOptions;
-        return request(url, rest);
-      }
-      throw new Error('request options error');
-    },
-    ...options,
-  });
-}
 
 // request 方法 opts 参数的接口
 interface IRequestOptions extends AxiosRequestConfig {
@@ -270,19 +200,4 @@ const request: IRequest = (url: string, opts: any = { method: 'GET' }) => {
   });
 };
 
-export { useRequest, UseRequestProvider, request, getRequestInstance };
-
-export type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-  RequestError,
-  IRequestInterceptorAxios as RequestInterceptorAxios,
-  IRequestInterceptorUmiRequest as RequestInterceptorUmiRequest,
-  IRequestInterceptor as RequestInterceptor,
-  IErrorInterceptor as ErrorInterceptor,
-  IResponseInterceptor as ResponseInterceptor,
-  IRequestOptions as RequestOptions,
-  IRequest as Request,
-};
+export { request, getRequestInstance };

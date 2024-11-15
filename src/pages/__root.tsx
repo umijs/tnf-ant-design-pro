@@ -1,6 +1,6 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRootRoute } from '@umijs/tnf/router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App, ConfigProvider } from 'antd';
 import Layout from '../components/ProLayout/Layout';
 

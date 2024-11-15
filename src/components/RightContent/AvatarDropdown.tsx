@@ -1,11 +1,11 @@
 import React from 'react';
 import { flushSync } from 'react-dom';
+import { useNavigate } from '@umijs/tnf/router';
 import {
   LogoutOutlined,
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from '@umijs/tnf/router';
 import type { MenuProps } from 'antd';
 // import { createStyles } from 'antd-style';
 import { stringify } from 'querystring';

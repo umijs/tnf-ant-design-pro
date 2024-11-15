@@ -1,7 +1,7 @@
 import React from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { createFileRoute } from '@umijs/tnf/router';
 import { Alert, Card, Typography } from 'antd';
 
 const Admin: React.FC = () => {

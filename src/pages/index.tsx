@@ -1,6 +1,6 @@
 import React from 'react';
-import { PageContainer } from '@ant-design/pro-components';
 import { createFileRoute } from '@umijs/tnf/router';
+import { PageContainer } from '@ant-design/pro-components';
 import { Card, theme } from 'antd';
 
 /**
@@ -15,7 +15,6 @@ const InfoCard: React.FC<{
   href: string;
 }> = ({ title, href, index, desc }) => {
   const { useToken } = theme;
-
   const { token } = useToken();
 
   return (

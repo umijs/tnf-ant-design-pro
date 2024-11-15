@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createFileRoute, useNavigate } from '@umijs/tnf/router';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -13,7 +14,6 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { createFileRoute, useNavigate } from '@umijs/tnf/router';
 import { Alert, App, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import { Footer } from '@/components';

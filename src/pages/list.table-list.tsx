@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link, createFileRoute, useNavigate } from '@umijs/tnf/router';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
@@ -15,7 +16,6 @@ import {
   ProFormTextArea,
   ProTable,
 } from '@ant-design/pro-components';
-import { Link, createFileRoute, useNavigate } from '@umijs/tnf/router';
 import { Button, Drawer, Input, message } from 'antd';
 import { z } from 'zod';
 import type { FormValueType } from '../components/UpdateForm';
@@ -27,11 +27,6 @@ import {
   updateRule,
 } from '../services/ant-design-pro/api';
 
-/**
- * @en-US Add node
- * @zh-CN 添加节点
- * @param fields
- */
 const handleAdd = async (fields: API.RuleListItem) => {
   const hide = message.loading('正在添加');
   try {
@@ -48,12 +43,6 @@ const handleAdd = async (fields: API.RuleListItem) => {
   }
 };
 
-/**
- * @en-US Update node
- * @zh-CN 更新节点
- *
- * @param fields
- */
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('Configuring');
   try {
@@ -72,12 +61,6 @@ const handleUpdate = async (fields: FormValueType) => {
   }
 };
 
-/**
- *  Delete node
- * @zh-CN 删除节点
- *
- * @param selectedRows
- */
 const handleRemove = async (selectedRows: API.RuleListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
@@ -94,27 +77,15 @@ const handleRemove = async (selectedRows: API.RuleListItem[]) => {
     return false;
   }
 };
+
 const TableList: React.FC = () => {
-  /**
-   * @en-US Pop-up window of new window
-   * @zh-CN 新建窗口的弹窗
-   *  */
   const [createModalOpen, handleModalOpen] = useState<boolean>(false);
-  /**
-   * @en-US The pop-up window of the distribution update window
-   * @zh-CN 分布更新窗口的弹窗
-   * */
   const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const formRef = useRef<FormInstance>();
   const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
   const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
-
-  /**
-   * @en-US International configuration
-   * @zh-CN 国际化配置
-   * */
 
   const columns: ProColumns<API.RuleListItem>[] = [
     {
@@ -205,10 +176,7 @@ const TableList: React.FC = () => {
     },
   ];
 
-  const { data, total } = Route.useLoaderData() as {
-    data: API.RuleListItem[];
-    total: number;
-  };
+  const { data, total } = Route.useLoaderData();
   const search = Route.useSearch();
   const navigate = useNavigate();
 
@@ -237,7 +205,6 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        // request={rule}
         dataSource={data}
         columns={columns}
         rowSelection={{
