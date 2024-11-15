@@ -372,7 +372,11 @@ const TableList: React.FC = () => {
 
 export const Route = createFileRoute('/list/table-list')({
   component: TableList,
-  loader: async ({ deps }) => await rule(deps),
+  loader: async ({ deps }) => {
+    // delay 1s
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return await rule(deps);
+  },
   validateSearch: z.object({
     current: z.number().optional(),
     pageSize: z.number().optional(),
