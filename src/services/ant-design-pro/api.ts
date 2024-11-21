@@ -1,3 +1,4 @@
+import type { BasicGood, BasicProgress } from '@/types';
 import { request } from '@/utils/request';
 
 /** 获取当前的用户 GET /api/currentUser */
@@ -92,4 +93,17 @@ export async function removeRule(options?: { [key: string]: any }) {
       ...(options || {}),
     },
   });
+}
+
+export async function queryBasicProfile(): Promise<{
+  data: {
+    basicProgress: BasicProgress[];
+    basicGoods: BasicGood[];
+  };
+}> {
+  return request('/api/profile/basic');
+}
+
+export async function queryAdvancedProfile() {
+  return request('/api/profile/advanced');
 }

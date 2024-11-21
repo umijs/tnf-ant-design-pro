@@ -216,7 +216,7 @@ const TableList: React.FC = () => {
           total,
           current: search.current || 1,
           pageSize: search.pageSize || 20,
-          onShowSizeChange: (current, size) => {
+          onChange: (current, size) => {
             navigate({
               to: '/list/table-list',
               search: {
