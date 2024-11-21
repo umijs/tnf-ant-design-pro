@@ -1,3 +1,17 @@
-import { CrownOutlined, SmileOutlined, TableOutlined, UserOutlined, FormOutlined } from '@ant-design/icons';
+import {
+  CrownOutlined,
+  DashboardOutlined,
+  FormOutlined,
+  SmileOutlined,
+  TableOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 
-export default { SmileOutlined, CrownOutlined, TableOutlined, UserOutlined, FormOutlined };
+export default {
+  SmileOutlined,
+  CrownOutlined,
+  TableOutlined,
+  UserOutlined,
+  FormOutlined,
+  DashboardOutlined,
+};
