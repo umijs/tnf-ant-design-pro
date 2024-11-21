@@ -9,7 +9,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button, Input, message, Upload } from 'antd';
 import React from 'react';
-import { queryCity, queryProvince } from '@/services/ant-design-pro/account';
+import { queryCity, queryProvince } from '../-service';
 import useStyles from './index.style';
 
 const validatorPhone = (rule: any, value: string[], callback: (message?: string) => void) => {
