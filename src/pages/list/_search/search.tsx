@@ -18,7 +18,7 @@ const tabList = [
   },
 ];
 
-export const Route = createFileRoute('/list/search')({
+export const Route = createFileRoute('/list/_search/search')({
   component: () => {
     const handleTabChange = (key: string) => {};
     const handleFormSubmit = (value: string) => {};
