@@ -1,4 +1,5 @@
-import { createFileRoute } from '@umijs/tnf/router'
+import React, { useRef, useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import {
   PageContainer,
   ProForm,
@@ -6,8 +7,8 @@ import {
   ProFormSelect,
   ProFormText,
   StepsForm,
-} from '@ant-design/pro-components'
-import type { FormInstance } from 'antd'
+} from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import {
   Alert,
   Button,
@@ -16,15 +17,15 @@ import {
   Divider,
   Result,
   Statistic,
-} from 'antd'
-import React, { useRef, useState } from 'react'
-import type { StepDataType } from './-data.d'
-import useStyles from './-style.style'
+} from 'antd';
+import type { StepDataType } from './-data.d';
+import useStyles from './-style.style';
+
 const StepDescriptions: React.FC<{
-  stepData: StepDataType
-  bordered?: boolean
+  stepData: StepDataType;
+  bordered?: boolean;
 }> = ({ stepData, bordered }) => {
-  const { payAccount, receiverAccount, receiverName, amount } = stepData
+  const { payAccount, receiverAccount, receiverName, amount } = stepData;
   return (
     <Descriptions column={1} bordered={bordered}>
       <Descriptions.Item label="付款账户"> {payAccount}</Descriptions.Item>
@@ -46,13 +47,13 @@ const StepDescriptions: React.FC<{
         />
       </Descriptions.Item>
     </Descriptions>
-  )
-}
+  );
+};
 const StepResult: React.FC<{
-  onFinish: () => Promise<void>
-  children?: React.ReactNode
+  onFinish: () => Promise<void>;
+  children?: React.ReactNode;
 }> = (props) => {
-  const { styles } = useStyles()
+  const { styles } = useStyles();
   return (
     <Result
       status="success"
@@ -70,19 +71,19 @@ const StepResult: React.FC<{
     >
       {props.children}
     </Result>
-  )
-}
+  );
+};
 const StepForm: React.FC<Record<string, any>> = () => {
-  const { styles } = useStyles()
+  const { styles } = useStyles();
   const [stepData, setStepData] = useState<StepDataType>({
     payAccount: 'ant-design@alipay.com',
     receiverAccount: 'test@example.com',
     receiverName: 'Alex',
     amount: '500',
     receiverMode: 'alipay',
-  })
-  const [current, setCurrent] = useState(0)
-  const formRef = useRef<FormInstance>()
+  });
+  const [current, setCurrent] = useState(0);
+  const formRef = useRef<FormInstance>();
   return (
     <PageContainer content="将一个冗长或用户不熟悉的表单任务分成多个步骤，指导用户完成。">
       <Card bordered={false}>
@@ -92,9 +93,9 @@ const StepForm: React.FC<Record<string, any>> = () => {
           submitter={{
             render: (props, dom) => {
               if (props.step === 2) {
-                return null
+                return null;
               }
-              return dom
+              return dom;
             },
           }}
         >
@@ -103,8 +104,8 @@ const StepForm: React.FC<Record<string, any>> = () => {
             title="填写转账信息"
             initialValues={stepData}
             onFinish={async (values) => {
-              setStepData(values)
-              return true
+              setStepData(values);
+              return true;
             }}
           >
             <ProFormSelect
@@ -217,8 +218,8 @@ const StepForm: React.FC<Record<string, any>> = () => {
           <StepsForm.StepForm title="完成">
             <StepResult
               onFinish={async () => {
-                setCurrent(0)
-                formRef.current?.resetFields()
+                setCurrent(0);
+                formRef.current?.resetFields();
               }}
             >
               <StepDescriptions stepData={stepData} />
@@ -243,9 +244,9 @@ const StepForm: React.FC<Record<string, any>> = () => {
         </div>
       </Card>
     </PageContainer>
-  )
-}
+  );
+};
 
 export const Route = createFileRoute('/form/step-form/')({
   component: StepForm,
-})
+});

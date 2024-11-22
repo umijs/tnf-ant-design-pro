@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   DownloadOutlined,
   EditOutlined,
@@ -6,10 +7,10 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
 import numeral from 'numeral';
-import React,{useEffect,useState} from 'react';
 import type { ListItemDataType } from '../../-data';
 import { queryFakeList } from '../../-service';
 import useStyles from './index.style';
+
 export function formatWan(val: number) {
   const v = val * 1;
   if (!v || Number.isNaN(v)) return '';
@@ -36,19 +37,19 @@ export function formatWan(val: number) {
 }
 const Applications: React.FC = () => {
   const { styles: stylesApplications } = useStyles();
-  const [listData,setListData] = useState([])
+  const [listData, setListData] = useState([]);
 
   // 获取tab列表数据
   const fetchData = async () => {
     const { data: listData } = await queryFakeList({
       count: 30,
     });
-    setListData(listData)
-  }
+    setListData(listData);
+  };
 
-  useEffect(()=>{
-    fetchData()
-  },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const CardInfo: React.FC<{
     activeUser: React.ReactNode;
@@ -113,7 +114,10 @@ const Applications: React.FC = () => {
               </Dropdown>,
             ]}
           >
-            <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
+            <Card.Meta
+              avatar={<Avatar size="small" src={item.avatar} />}
+              title={item.title}
+            />
             <div>
               <CardInfo
                 activeUser={formatWan(item.activeUser)}

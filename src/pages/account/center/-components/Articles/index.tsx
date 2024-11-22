@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from 'react';
 import { LikeOutlined, MessageFilled, StarTwoTone } from '@ant-design/icons';
 import { List, Tag } from 'antd';
-import React,{useEffect,useState} from 'react';
 import type { ListItemDataType } from '../../-data';
 import { queryFakeList } from '../../-service';
 import ArticleListContent from '../ArticleListContent';
 import useStyles from './index.style';
+
 const Articles: React.FC = () => {
   const { styles } = useStyles();
   const IconText: React.FC<{
@@ -16,19 +17,19 @@ const Articles: React.FC = () => {
     </span>
   );
 
-  const [listData,setListData] = useState([])
+  const [listData, setListData] = useState([]);
 
   // 获取tab列表数据
   const fetchData = async () => {
     const { data: listData } = await queryFakeList({
       count: 30,
     });
-    setListData(listData)
-  }
+    setListData(listData);
+  };
 
-  useEffect(()=>{
-    fetchData()
-  },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <List<ListItemDataType>
@@ -43,7 +44,11 @@ const Articles: React.FC = () => {
           actions={[
             <IconText key="star" icon={<StarTwoTone />} text={item.star} />,
             <IconText key="like" icon={<LikeOutlined />} text={item.like} />,
-            <IconText key="message" icon={<MessageFilled />} text={item.message} />,
+            <IconText
+              key="message"
+              icon={<MessageFilled />}
+              text={item.message}
+            />,
           ]}
         >
           <List.Item.Meta

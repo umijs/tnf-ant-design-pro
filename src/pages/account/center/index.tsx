@@ -1,13 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { createFileRoute } from '@umijs/tnf/router'
-import { ClusterOutlined, ContactsOutlined, HomeOutlined, PlusOutlined } from '@ant-design/icons';
+import { createFileRoute } from '@umijs/tnf/router';
+import {
+  ClusterOutlined,
+  ContactsOutlined,
+  HomeOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
 import { Avatar, Card, Col, Divider, Input, InputRef, Row, Tag } from 'antd';
+import { createStyles } from 'antd-style';
 import Applications from './-components/Applications';
 import Articles from './-components/Articles';
 import Projects from './-components/Projects';
-import { createStyles } from 'antd-style';
-import { queryCurrent } from './-service'
+import { queryCurrent } from './-service';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -142,7 +147,10 @@ const TagList: React.FC<{
   };
   const handleInputConfirm = () => {
     let tempsTags = [...newTags];
-    if (inputValue && tempsTags.filter((tag) => tag.label === inputValue).length === 0) {
+    if (
+      inputValue &&
+      tempsTags.filter((tag) => tag.label === inputValue).length === 0
+    ) {
       tempsTags = [
         ...tempsTags,
         {
@@ -193,10 +201,14 @@ const Center: React.FC = () => {
   const [tabKey, setTabKey] = useState<tabKeyType>('articles');
 
   //  获取用户信息
-  const { data:currentUser } = Route.useLoaderData()
+  const { data: currentUser } = Route.useLoaderData();
 
   //  渲染用户信息
-  const renderUserInfo = ({ title, group, geographic }: Partial<CurrentUser>) => {
+  const renderUserInfo = ({
+    title,
+    group,
+    geographic,
+  }: Partial<CurrentUser>) => {
     return (
       <div className={styles.detail}>
         <p>
@@ -322,6 +334,6 @@ const Center: React.FC = () => {
 export const Route = createFileRoute('/account/center/')({
   component: Center,
   loader: async (params) => {
-    return await queryCurrent()
+    return await queryCurrent();
   },
-})
+});

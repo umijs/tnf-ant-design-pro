@@ -1,6 +1,5 @@
-import React from 'react'
-import { createFileRoute } from '@umijs/tnf/router'
-import { Card, message } from 'antd'
+import React from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import {
   PageContainer,
   ProForm,
@@ -11,16 +10,17 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
-} from '@ant-design/pro-components'
-import { fakeSubmitForm } from './-service'
-import useStyles from './-style.style'
+} from '@ant-design/pro-components';
+import { Card, message } from 'antd';
+import { fakeSubmitForm } from './-service';
+import useStyles from './-style.style';
 
 const BasicForm: React.FC<Record<string, any>> = () => {
-  const { styles } = useStyles()
+  const { styles } = useStyles();
   const onFinish = async (values: Record<string, any>) => {
-    await fakeSubmitForm(values)
-    message.success('提交成功')
-  }
+    await fakeSubmitForm(values);
+    message.success('提交成功');
+  };
   return (
     <PageContainer content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
       <Card bordered={false}>
@@ -178,15 +178,15 @@ const BasicForm: React.FC<Record<string, any>> = () => {
                     },
                   ]}
                 />
-              )
+              );
             }}
           </ProFormDependency>
         </ProForm>
       </Card>
     </PageContainer>
-  )
-}
+  );
+};
 
 export const Route = createFileRoute('/form/basic-form/')({
   component: BasicForm,
-})
+});

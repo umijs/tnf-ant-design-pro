@@ -1,27 +1,28 @@
+import React, { useEffect, useState } from 'react';
 import { Card, List } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React,{useEffect,useState} from 'react';
 import type { ListItemDataType } from '../../-data';
 import { queryFakeList } from '../../-service';
 import AvatarList from '../AvatarList';
 import useStyles from './index.style';
+
 dayjs.extend(relativeTime);
 const Projects: React.FC = () => {
   const { styles } = useStyles();
-  const [listData,setListData] = useState([])
+  const [listData, setListData] = useState([]);
 
   // 获取tab列表数据
   const fetchData = async () => {
     const { data: listData } = await queryFakeList({
       count: 30,
     });
-    setListData(listData)
-  }
+    setListData(listData);
+  };
 
-  useEffect(()=>{
-    fetchData()
-  },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <List<ListItemDataType>
       className={styles.coverCardList}
@@ -38,8 +39,15 @@ const Projects: React.FC = () => {
       dataSource={listData?.list || []}
       renderItem={(item) => (
         <List.Item>
-          <Card className={styles.card} hoverable cover={<img alt={item.title} src={item.cover} />}>
-            <Card.Meta title={<a>{item.title}</a>} description={item.subDescription} />
+          <Card
+            className={styles.card}
+            hoverable
+            cover={<img alt={item.title} src={item.cover} />}
+          >
+            <Card.Meta
+              title={<a>{item.title}</a>}
+              description={item.subDescription}
+            />
             <div className={styles.cardItemContent}>
               <span>{dayjs(item.updatedAt).fromNow()}</span>
               <div className={styles.avatarList}>

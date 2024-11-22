@@ -1,0 +1,54 @@
+@screen-sm: 768px;
+
+.main {
+  .ant-descriptions-row > td {
+    padding-bottom: 8px;
+  }
+
+  .ant-page-header-heading-extra {
+    flex-direction: column;
+  }
+}
+
+.headerList {
+  margin-bottom: 4px;
+
+  .ant-descriptions-row > td {
+    padding-bottom: 8px;
+  }
+}
+
+.stepDescription {
+  position: relative;
+  left: 38px;
+  padding-top: 8px;
+  font-size: 14px;
+  text-align: left;
+
+  > div {
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  @media screen and (max-width: @screen-sm) {
+    left: 8px;
+  }
+}
+
+.pageHeader {
+  .ant-page-header-heading-extra > * + * {
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: @screen-sm) {
+    .ant-pro-page-header-wrap-row {
+      flex-direction: column;
+    }
+  }
+}
+
+.moreInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}

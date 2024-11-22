@@ -1,7 +1,8 @@
+import React from 'react';
 import { Avatar, Tooltip } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import useStyles from './index.style';
+
 export declare type SizeType = number | 'small' | 'default' | 'large';
 export type AvatarItemProps = {
   tips: React.ReactNode;
@@ -16,9 +17,16 @@ export type AvatarListProps = {
   maxLength?: number;
   excessItemsStyle?: React.CSSProperties;
   style?: React.CSSProperties;
-  children: React.ReactElement<AvatarItemProps> | React.ReactElement<AvatarItemProps>[];
+  children:
+    | React.ReactElement<AvatarItemProps>
+    | React.ReactElement<AvatarItemProps>[];
 };
-const Item: React.FC<AvatarItemProps> = ({ src, size, tips, onClick = () => {} }) => {
+const Item: React.FC<AvatarItemProps> = ({
+  src,
+  size,
+  tips,
+  onClick = () => {},
+}) => {
   const { styles } = useStyles();
   const avatarSizeToClassName = (size?: SizeType | 'mini') =>
     classNames(styles.avatarItem, {
@@ -51,7 +59,9 @@ const AvatarList: React.FC<AvatarListProps> & {
   const { styles } = useStyles();
   const numOfChildren = React.Children.count(children);
   const numToShow = maxLength >= numOfChildren ? numOfChildren : maxLength;
-  const childrenArray = React.Children.toArray(children) as React.ReactElement<AvatarItemProps>[];
+  const childrenArray = React.Children.toArray(
+    children,
+  ) as React.ReactElement<AvatarItemProps>[];
   const childrenWithProps = childrenArray.slice(0, numToShow).map((child) =>
     React.cloneElement(child, {
       size,
@@ -61,7 +71,10 @@ const AvatarList: React.FC<AvatarListProps> & {
     const cls = avatarSizeToClassName(size);
     childrenWithProps.push(
       <li key="exceed" className={cls}>
-        <Avatar size={size} style={excessItemsStyle}>{`+${numOfChildren - maxLength}`}</Avatar>
+        <Avatar
+          size={size}
+          style={excessItemsStyle}
+        >{`+${numOfChildren - maxLength}`}</Avatar>
       </li>,
     );
   }

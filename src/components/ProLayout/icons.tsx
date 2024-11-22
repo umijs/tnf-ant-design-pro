@@ -1,17 +1,23 @@
 import {
+  CheckCircleOutlined,
   CrownOutlined,
   DashboardOutlined,
   FormOutlined,
+  ProfileOutlined,
   SmileOutlined,
   TableOutlined,
   UserOutlined,
+  WarningOutlined,
 } from '@ant-design/icons';
 
 export default {
-  SmileOutlined,
+  CheckCircleOutlined,
   CrownOutlined,
+  ProfileOutlined,
+  SmileOutlined,
   TableOutlined,
-  UserOutlined,
-  FormOutlined,
+  WarningOutlined,
   DashboardOutlined,
+  FormOutlined,
+  UserOutlined,
 };

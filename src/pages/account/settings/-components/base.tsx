@@ -1,3 +1,4 @@
+import React from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   ProForm,
@@ -7,12 +8,15 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { Button, Input, message, Upload } from 'antd';
-import React from 'react';
+import { Button, Input, Upload, message } from 'antd';
 import { queryCity, queryProvince } from '../-service';
 import useStyles from './index.style';
 
-const validatorPhone = (rule: any, value: string[], callback: (message?: string) => void) => {
+const validatorPhone = (
+  rule: any,
+  value: string[],
+  callback: (message?: string) => void,
+) => {
   if (!value[0]) {
     callback('Please input your area code!');
   }
@@ -49,7 +53,8 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
       if (currentUser.avatar) {
         return currentUser.avatar;
       }
-      const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
+      const url =
+        'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
       return url;
     }
     return '';

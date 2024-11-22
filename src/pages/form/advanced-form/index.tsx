@@ -1,6 +1,8 @@
-import { createFileRoute } from '@umijs/tnf/router'
-import { CloseCircleOutlined } from '@ant-design/icons'
-import type { ProColumnType } from '@ant-design/pro-components'
+import type { FC } from 'react';
+import { useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import type { ProColumnType } from '@ant-design/pro-components';
 import {
   EditableProTable,
   FooterToolbar,
@@ -10,21 +12,20 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTimePicker,
-} from '@ant-design/pro-components'
-import { Card, Col, message, Popover, Row } from 'antd'
-import type { FC } from 'react'
-import { useState } from 'react'
-import { fakeSubmitForm } from './-service'
-import useStyles from './-style.style'
+} from '@ant-design/pro-components';
+import { Card, Col, Popover, Row, message } from 'antd';
+import { fakeSubmitForm } from './-service';
+import useStyles from './-style.style';
+
 interface TableFormDateType {
-  key: string
-  workId?: string
-  name?: string
-  department?: string
-  isNew?: boolean
-  editable?: boolean
+  key: string;
+  workId?: string;
+  name?: string;
+  department?: string;
+  isNew?: boolean;
+  editable?: boolean;
 }
-type InternalNamePath = (string | number)[]
+type InternalNamePath = (string | number)[];
 const fieldLabels = {
   name: '仓库名',
   url: '仓库域名',
@@ -38,7 +39,7 @@ const fieldLabels = {
   approver2: '责任人',
   dateRange2: '生效日期',
   type2: '任务类型',
-}
+};
 const tableData = [
   {
     key: '1',
@@ -58,28 +59,28 @@ const tableData = [
     name: 'Joe Black',
     department: 'Sidney No. 1 Lake Park',
   },
-]
+];
 interface ErrorField {
-  name: InternalNamePath
-  errors: string[]
+  name: InternalNamePath;
+  errors: string[];
 }
 const AdvancedForm: FC<Record<string, any>> = () => {
-  const { styles } = useStyles()
-  const [error, setError] = useState<ErrorField[]>([])
+  const { styles } = useStyles();
+  const [error, setError] = useState<ErrorField[]>([]);
   const getErrorInfo = (errors: ErrorField[]) => {
-    const errorCount = errors.filter((item) => item.errors.length > 0).length
+    const errorCount = errors.filter((item) => item.errors.length > 0).length;
     if (!errors || errorCount === 0) {
-      return null
+      return null;
     }
     const scrollToField = (fieldKey: string) => {
-      const labelNode = document.querySelector(`label[for="${fieldKey}"]`)
+      const labelNode = document.querySelector(`label[for="${fieldKey}"]`);
       if (labelNode) {
-        labelNode.scrollIntoView(true)
+        labelNode.scrollIntoView(true);
       }
-    }
+    };
     const errorList = errors.map((err) => {
       if (!err || err.errors.length === 0) {
-        return null
+        return null;
       }
       const key = err.name[0] as
         | 'name'
@@ -87,7 +88,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
         | 'owner'
         | 'approver'
         | 'dateRange'
-        | 'type'
+        | 'type';
       return (
         <li
           key={key}
@@ -98,8 +99,8 @@ const AdvancedForm: FC<Record<string, any>> = () => {
           <div className={styles.errorMessage}>{err.errors[0]}</div>
           <div className={styles.errorField}>{fieldLabels[key]}</div>
         </li>
-      )
-    })
+      );
+    });
     return (
       <span className={styles.errorIcon}>
         <Popover
@@ -109,29 +110,29 @@ const AdvancedForm: FC<Record<string, any>> = () => {
           trigger="click"
           getPopupContainer={(trigger: HTMLElement) => {
             if (trigger && trigger.parentNode) {
-              return trigger.parentNode as HTMLElement
+              return trigger.parentNode as HTMLElement;
             }
-            return trigger
+            return trigger;
           }}
         >
           <CloseCircleOutlined />
         </Popover>
         {errorCount}
       </span>
-    )
-  }
+    );
+  };
   const onFinish = async (values: Record<string, any>) => {
-    setError([])
+    setError([]);
     try {
-      await fakeSubmitForm(values)
-      message.success('提交成功')
+      await fakeSubmitForm(values);
+      message.success('提交成功');
     } catch {
       // console.log
     }
-  }
+  };
   const onFinishFailed = (errorInfo: any) => {
-    setError(errorInfo.errorFields)
-  }
+    setError(errorInfo.errorFields);
+  };
   const columns: ProColumnType<TableFormDateType>[] = [
     {
       title: '成员姓名',
@@ -160,15 +161,15 @@ const AdvancedForm: FC<Record<string, any>> = () => {
           <a
             key="eidit"
             onClick={() => {
-              action?.startEditable(record.key)
+              action?.startEditable(record.key);
             }}
           >
             编辑
           </a>,
-        ]
+        ];
       },
     },
-  ]
+  ];
   return (
     <ProForm
       layout="vertical"
@@ -180,7 +181,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
               {getErrorInfo(error)}
               {dom}
             </FooterToolbar>
-          )
+          );
         },
       }}
       initialValues={{
@@ -534,7 +535,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
                 record: () => {
                   return {
                     key: `0${Date.now()}`,
-                  }
+                  };
                 },
               }}
               columns={columns}
@@ -544,8 +545,8 @@ const AdvancedForm: FC<Record<string, any>> = () => {
         </Card>
       </PageContainer>
     </ProForm>
-  )
-}
+  );
+};
 export const Route = createFileRoute('/form/advanced-form/')({
   component: AdvancedForm,
-})
+});

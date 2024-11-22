@@ -1,84 +1,84 @@
-import React, { useRef, useState, useLayoutEffect,useMemo } from 'react'
-import { createFileRoute } from '@umijs/tnf/router'
-import { GridContent } from '@ant-design/pro-layout'
-import { Menu } from 'antd'
-import BaseView from './-components/base'
-import BindingView from './-components/binding'
-import NotificationView from './-components/notification'
-import SecurityView from './-components/security'
-import { queryCurrent } from './-service'
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
+import { GridContent } from '@ant-design/pro-layout';
+import { Menu } from 'antd';
+import BaseView from './-components/base';
+import BindingView from './-components/binding';
+import NotificationView from './-components/notification';
+import SecurityView from './-components/security';
+import { queryCurrent } from './-service';
 import useStyles from './-style.style';
 
-type SettingsStateKeys = 'base' | 'security' | 'binding' | 'notification'
+type SettingsStateKeys = 'base' | 'security' | 'binding' | 'notification';
 type SettingsState = {
-  mode: 'inline' | 'horizontal'
-  selectKey: SettingsStateKeys
-}
+  mode: 'inline' | 'horizontal';
+  selectKey: SettingsStateKeys;
+};
 const Settings: React.FC = () => {
-  const { styles } = useStyles()
+  const { styles } = useStyles();
   const menuMap: Record<string, React.ReactNode> = {
     base: '基本设置',
     security: '安全设置',
     binding: '账号绑定',
     notification: '新消息通知',
-  }
+  };
   const [initConfig, setInitConfig] = useState<SettingsState>({
     mode: 'inline',
     selectKey: 'base',
-  })
-  const dom = useRef<HTMLDivElement>()
+  });
+  const dom = useRef<HTMLDivElement>();
 
-  const { data } = Route.useLoaderData()
+  const { data } = Route.useLoaderData();
 
   const resize = () => {
     requestAnimationFrame(() => {
       if (!dom.current) {
-        return
+        return;
       }
-      let mode: 'inline' | 'horizontal' = 'inline'
-      const { offsetWidth } = dom.current
+      let mode: 'inline' | 'horizontal' = 'inline';
+      const { offsetWidth } = dom.current;
       if (dom.current.offsetWidth < 641 && offsetWidth > 400) {
-        mode = 'horizontal'
+        mode = 'horizontal';
       }
       if (window.innerWidth < 768 && offsetWidth > 400) {
-        mode = 'horizontal'
+        mode = 'horizontal';
       }
       setInitConfig({
         ...initConfig,
         mode: mode as SettingsState['mode'],
-      })
-    })
-  }
+      });
+    });
+  };
   useLayoutEffect(() => {
     if (dom.current) {
-      window.addEventListener('resize', resize)
-      resize()
+      window.addEventListener('resize', resize);
+      resize();
     }
     return () => {
-      window.removeEventListener('resize', resize)
-    }
-  }, [dom.current])
+      window.removeEventListener('resize', resize);
+    };
+  }, [dom.current]);
   const getMenu = () => {
     return Object.keys(menuMap).map((item) => ({
       key: item,
       label: menuMap[item],
-    }))
-  }
+    }));
+  };
   const renderChildren = () => {
-    const { selectKey } = initConfig
+    const { selectKey } = initConfig;
     switch (selectKey) {
       case 'base':
-        return <BaseView currentUser={data}/>
+        return <BaseView currentUser={data} />;
       case 'security':
-        return <SecurityView />
+        return <SecurityView />;
       case 'binding':
-        return <BindingView />
+        return <BindingView />;
       case 'notification':
-        return <NotificationView />
+        return <NotificationView />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <GridContent>
@@ -86,7 +86,7 @@ const Settings: React.FC = () => {
         className={styles.main}
         ref={(ref) => {
           if (ref) {
-            dom.current = ref
+            dom.current = ref;
           }
         }}
       >
@@ -98,7 +98,7 @@ const Settings: React.FC = () => {
               setInitConfig({
                 ...initConfig,
                 selectKey: key as SettingsStateKeys,
-              })
+              });
             }}
             items={getMenu()}
           />
@@ -109,12 +109,12 @@ const Settings: React.FC = () => {
         </div>
       </div>
     </GridContent>
-  )
-}
+  );
+};
 
 export const Route = createFileRoute('/account/settings/')({
   component: Settings,
   loader: async (params) => {
-    return await queryCurrent()
+    return await queryCurrent();
   },
-})
+});
