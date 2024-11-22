@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import type { FC } from 'react';
-import { createFileRoute } from '@umijs/tnf/router';
+import { createFileRoute, useRouterState } from '@umijs/tnf/router';
 import {
   DingdingOutlined,
   DownOutlined,
@@ -273,13 +273,14 @@ const ProfileAdvanced: FC = () => {
     return dot;
   };
 
+  const loading = useRouterState({ select: (s) => s.isLoading });
   const { data = {} } = Route.useLoaderData();
   const { advancedOperation1, advancedOperation2, advancedOperation3 } = data;
   const contentList = {
     tab1: (
       <Table
         pagination={false}
-        // loading={loading}
+        loading={loading}
         dataSource={advancedOperation1}
         columns={columns}
       />
@@ -287,7 +288,7 @@ const ProfileAdvanced: FC = () => {
     tab2: (
       <Table
         pagination={false}
-        // loading={loading}
+        loading={loading}
         dataSource={advancedOperation2}
         columns={columns}
       />
@@ -295,7 +296,7 @@ const ProfileAdvanced: FC = () => {
     tab3: (
       <Table
         pagination={false}
-        // loading={loading}
+        loading={loading}
         dataSource={advancedOperation3}
         columns={columns}
       />
@@ -492,4 +493,5 @@ const ProfileAdvanced: FC = () => {
 export const Route = createFileRoute('/profile/advanced')({
   component: ProfileAdvanced,
   loader: async () => await queryAdvancedProfile(),
+  pendingComponent: () => null,
 });

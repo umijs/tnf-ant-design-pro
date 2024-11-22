@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, createFileRoute, useNavigate } from '@umijs/tnf/router';
+import {
+  Link,
+  createFileRoute,
+  useNavigate,
+  useRouterState,
+} from '@umijs/tnf/router';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
@@ -179,6 +184,7 @@ const TableList: React.FC = () => {
   const { data, total } = Route.useLoaderData();
   const search = Route.useSearch();
   const navigate = useNavigate();
+  const loading = useRouterState({ select: (s) => s.isLoading });
 
   useEffect(() => {
     formRef?.current.setFieldsValue(search);
@@ -205,6 +211,7 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
+        loading={loading}
         dataSource={data}
         columns={columns}
         rowSelection={{
@@ -397,4 +404,5 @@ export const Route = createFileRoute('/list/table-list')({
     status,
     updatedAt,
   }),
+  pendingComponent: () => null,
 });
