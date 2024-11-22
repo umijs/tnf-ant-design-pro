@@ -1,14 +1,14 @@
-import type { FC } from 'react';
+import React, { type FC } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import AvatarList from './-components/AvatarList';
-import StandardFormRow from './-components/StandardFormRow';
-import TagSelect from './-components/TagSelect';
-import type { ListItemDataType } from './-data';
-import { queryFakeList } from './-service';
-import useStyles from './-style.style';
+import AvatarList from '@/components/AvatarList';
+import StandardFormRow from '@/components/StandardFormRow';
+import TagSelect from '@/components/TagSelect';
+import { queryFakeList } from '@/services/ant-design-pro/api';
+import useStyles from '@/styles/search-projects';
+import type { ListItemDataType } from '@/types';
 
 dayjs.extend(relativeTime);
 
@@ -94,7 +94,6 @@ const Projects: FC = () => {
           onValuesChange={(_, values) => {
             // 表单项变化时请求数据
             // 模拟查询表单生效
-            run(values);
           }}
         >
           <StandardFormRow
@@ -104,7 +103,7 @@ const Projects: FC = () => {
               paddingBottom: 11,
             }}
           >
-            <FormItem name="category">
+            <Form.Item name="category">
               <TagSelect expandable>
                 {categoryOptions.map((category) => (
                   <TagSelect.Option
@@ -115,49 +114,7 @@ const Projects: FC = () => {
                   </TagSelect.Option>
                 ))}
               </TagSelect>
-            </FormItem>
-          </StandardFormRow>
-          <StandardFormRow title="其它选项" grid last>
-            <Row gutter={16}>
-              <Col lg={8} md={10} sm={10} xs={24}>
-                <FormItem {...formItemLayout} label="作者" name="author">
-                  <Select
-                    placeholder="不限"
-                    style={{
-                      maxWidth: 200,
-                      width: '100%',
-                    }}
-                    options={[
-                      {
-                        label: '王昭君',
-                        value: 'lisa',
-                      },
-                    ]}
-                  />
-                </FormItem>
-              </Col>
-              <Col lg={8} md={10} sm={10} xs={24}>
-                <FormItem {...formItemLayout} label="好评度" name="rate">
-                  <Select
-                    placeholder="不限"
-                    style={{
-                      maxWidth: 200,
-                      width: '100%',
-                    }}
-                    options={[
-                      {
-                        label: '优秀',
-                        value: 'good',
-                      },
-                      {
-                        label: '普通',
-                        value: 'normal',
-                      },
-                    ]}
-                  />
-                </FormItem>
-              </Col>
-            </Row>
+            </Form.Item>
           </StandardFormRow>
         </Form>
       </Card>
@@ -166,7 +123,7 @@ const Projects: FC = () => {
   );
 };
 
-export const Route = createFileRoute('/list/_search/search/projects/')({
+export const Route = createFileRoute('/list/search/projects')({
   component: Projects,
   loader: async () => await queryFakeList({ count: 8 }),
 });

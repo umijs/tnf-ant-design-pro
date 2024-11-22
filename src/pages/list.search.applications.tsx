@@ -19,11 +19,11 @@ import {
   Tooltip,
 } from 'antd';
 import numeral from 'numeral';
-import StandardFormRow from './-components/StandardFormRow';
-import TagSelect from './-components/TagSelect';
-import type { ListItemDataType } from './-data';
-import { queryFakeList } from './-service';
-import useStyles from './-style.style';
+import StandardFormRow from '@/components/StandardFormRow';
+import TagSelect from '@/components/TagSelect';
+import { queryFakeList } from '@/services/ant-design-pro/api';
+import useStyles from '@/styles/search-applications';
+import type { ListItemDataType } from '@/types';
 
 const categoryOptions = Array.from({ length: 12 }).map((_, index) => ({
   value: `cat${index + 1}`,
@@ -224,7 +224,7 @@ export const Applications: FC<Record<string, any>> = () => {
   );
 };
 
-export const Route = createFileRoute('/list/_search/search/applications/')({
+export const Route = createFileRoute('/list/search/applications')({
   component: Applications,
   loader: async () => await queryFakeList({ count: 8 }),
 });

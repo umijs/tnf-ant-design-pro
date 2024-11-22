@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { Outlet, createFileRoute, useNavigate } from '@umijs/tnf/router';
+import React from 'react';
+import {
+  Outlet,
+  createFileRoute,
+  useLocation,
+  useNavigate,
+} from '@umijs/tnf/router';
 import { PageContainer } from '@ant-design/pro-components';
 import { Input } from 'antd';
 
@@ -18,12 +23,13 @@ const tabList = [
   },
 ];
 
-export const Route = createFileRoute('/list/_search/search')({
+export const Route = createFileRoute('/list/search')({
   component: () => {
-    const [tabActiveKey, setTabKey] = useState('articles');
+    const { pathname } = useLocation();
+    let tabActiveKey = pathname.split('/').pop() as string;
     const navigate = useNavigate();
     const handleTabChange = (key: string) => {
-      setTabKey(key);
+      tabActiveKey = key;
       switch (key) {
         case 'articles':
           navigate({ to: '/list/search/articles/' });

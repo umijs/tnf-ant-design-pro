@@ -7,8 +7,8 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Result } from 'antd';
-import type { BasicListItemDataType } from '../-data.d';
-import useStyles from '../-style.style';
+import useStyles from '@/styles/basic-list';
+import type { BasicListItemDataType } from '@/types';
 
 type OperationModalProps = {
   done: boolean;

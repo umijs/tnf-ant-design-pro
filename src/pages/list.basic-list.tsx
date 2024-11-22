@@ -16,15 +16,15 @@ import {
   Row,
 } from 'antd';
 import dayjs from 'dayjs';
-import OperationModal from './-components/OperationModal';
-import type { BasicListItemDataType } from './-data.d';
+import OperationModal from '@/components/OperationModal';
 import {
   addFakeList,
-  queryFakeList,
+  queryBasicList,
   removeFakeList,
   updateFakeList,
-} from './-service';
-import useStyles from './-style.style';
+} from '@/services/ant-design-pro/api';
+import useStyles from '@/styles/basic-list';
+import type { BasicListItemDataType } from '@/types';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -246,7 +246,7 @@ export const BasicList: FC = () => {
   );
 };
 
-export const Route = createFileRoute('/list/basic-list/')({
+export const Route = createFileRoute('/list/basic-list')({
   component: BasicList,
-  loader: async () => await queryFakeList({ count: 50 }),
+  loader: async () => await queryBasicList({ count: 50 }),
 });

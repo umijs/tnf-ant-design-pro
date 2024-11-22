@@ -9,9 +9,9 @@ import {
 import { GridContent } from '@ant-design/pro-components';
 import { Avatar, Card, Col, Divider, Input, InputRef, Row, Tag } from 'antd';
 import { createStyles } from 'antd-style';
+import Applications from '../components/Account/Applications';
 import Articles from '../components/Account/Center/Articles';
 import Projects from '../components/Account/Center/Projects';
-import Applications from '../components/ProLayout/Applications';
 import { queryCurrent } from '../services/ant-design-pro/account/center';
 
 const useStyles = createStyles(({ token }) => {

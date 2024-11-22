@@ -1,20 +1,15 @@
 import type { FC } from 'react';
 import React, { useMemo } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
-import {
-  LikeOutlined,
-  LoadingOutlined,
-  MessageOutlined,
-  StarOutlined,
-} from '@ant-design/icons';
+import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, List, Row, Select, Tag } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
-import ArticleListContent from './-components/ArticleListContent';
-import StandardFormRow from './-components/StandardFormRow';
-import TagSelect from './-components/TagSelect';
-import type { ListItemDataType } from './-data';
-import { queryFakeList } from './-service';
-import useStyles from './-style.style';
+import ArticleListContent from '@/components/ArticleListContent';
+import StandardFormRow from '@/components/StandardFormRow';
+import TagSelect from '@/components/TagSelect';
+import { queryFakeList } from '@/services/ant-design-pro/api';
+import useStyles from '@/styles/search-articles';
+import type { ListItemDataType } from '@/types';
 
 const categoryOptions = Array.from({ length: 12 }).map((_, index) => ({
   value: `cat${index + 1}`,
@@ -96,12 +91,14 @@ const Articles: FC = () => {
 
   const formItemLayout = {
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 24 },
-      md: { span: 12 },
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 16,
+      },
     },
   };
-
   const loadMoreDom = list.length > 0 && (
     <div style={{ textAlign: 'center', marginTop: 16 }}>
       <Button
@@ -158,38 +155,6 @@ const Articles: FC = () => {
               只看自己的
             </a>
           </StandardFormRow>
-          <StandardFormRow title="其它选项" grid last>
-            <Row gutter={16}>
-              <Col xl={8} lg={10} md={12} sm={24} xs={24}>
-                <FormItem {...formItemLayout} label="活跃用户" name="user">
-                  <Select
-                    placeholder="不限"
-                    style={{ maxWidth: 200, width: '100%' }}
-                    options={[
-                      {
-                        label: '李三',
-                        value: 'lisa',
-                      },
-                    ]}
-                  />
-                </FormItem>
-              </Col>
-              <Col xl={8} lg={10} md={12} sm={24} xs={24}>
-                <FormItem {...formItemLayout} label="好评度" name="rate">
-                  <Select
-                    placeholder="不限"
-                    style={{ maxWidth: 200, width: '100%' }}
-                    options={[
-                      {
-                        label: '优秀',
-                        value: 'good',
-                      },
-                    ]}
-                  />
-                </FormItem>
-              </Col>
-            </Row>
-          </StandardFormRow>
         </Form>
       </Card>
       <Card
@@ -237,7 +202,7 @@ const Articles: FC = () => {
   );
 };
 
-export const Route = createFileRoute('/list/_search/search/articles/')({
+export const Route = createFileRoute('/list/search/articles')({
   component: Articles,
   loader: async () => await queryFakeList({ count: pageSize }),
 });
