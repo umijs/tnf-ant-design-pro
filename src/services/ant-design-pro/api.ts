@@ -1,4 +1,11 @@
-import type { BasicGood, BasicProgress } from '@/types';
+import type {
+  BasicGood,
+  BasicListItemDataType,
+  BasicProgress,
+  CardListItemDataType,
+  ListItemDataType,
+  Params,
+} from '@/types';
 import { request } from '@/utils/request';
 
 /** 获取当前的用户 GET /api/currentUser */
@@ -106,4 +113,68 @@ export async function queryBasicProfile(): Promise<{
 
 export async function queryAdvancedProfile() {
   return request('/api/profile/advanced');
+}
+
+export async function queryFakeList(
+  params: Params,
+): Promise<{ data: { list: ListItemDataType[] } }> {
+  return request('/api/fake_list', {
+    params,
+  });
+}
+
+type ParamsType = {
+  count?: number;
+} & Partial<BasicListItemDataType>;
+
+export async function queryBasicList(
+  params: ParamsType,
+): Promise<{ data: { list: BasicListItemDataType[] } }> {
+  return request('/api/get_list', {
+    params,
+  });
+}
+
+export async function removeFakeList(
+  params: ParamsType,
+): Promise<{ data: { list: BasicListItemDataType[] } }> {
+  return request('/api/post_fake_list', {
+    method: 'POST',
+    data: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
+export async function addFakeList(
+  params: ParamsType,
+): Promise<{ data: { list: BasicListItemDataType[] } }> {
+  return request('/api/post_fake_list', {
+    method: 'POST',
+    data: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
+export async function updateFakeList(
+  params: ParamsType,
+): Promise<{ data: { list: BasicListItemDataType[] } }> {
+  return request('/api/post_fake_list', {
+    method: 'POST',
+    data: {
+      ...params,
+      method: 'update',
+    },
+  });
+}
+
+export async function queryCardList(params: {
+  count: number;
+}): Promise<{ data: { list: CardListItemDataType[] } }> {
+  return request('/api/card_fake_list', {
+    params,
+  });
 }
