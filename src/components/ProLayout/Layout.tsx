@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from '@umijs/tnf/router';
+import { LogoutOutlined } from '@ant-design/icons';
 import { ProLayout } from '@ant-design/pro-components';
+import { Dropdown } from 'antd';
 import { Footer, Question } from '../';
 import Exception from './Exception';
 import './Layout.css';
@@ -156,6 +158,30 @@ export default (props: any) => {
           }
         }
         return <Link to={path}>{label}</Link>;
+      }}
+      layout="mix"
+      // siderMenuType="group"
+      avatarProps={{
+        src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+        size: 'small',
+        title: 'admin',
+        render: (props, dom) => {
+          return (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: 'logout',
+                    icon: <LogoutOutlined />,
+                    label: '退出登录',
+                  },
+                ],
+              }}
+            >
+              {dom}
+            </Dropdown>
+          );
+        },
       }}
       disableContentMargin
       fixSiderbar
