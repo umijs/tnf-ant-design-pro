@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Link,
   createFileRoute,
+  useLoaderData,
   useNavigate,
   useRouterState,
 } from '@umijs/tnf/router';
@@ -182,6 +183,7 @@ const TableList: React.FC = () => {
   ];
 
   const { data, total } = Route.useLoaderData();
+  // const { data, total } = useLoaderData({ from: '/list/table-list' });
   const search = Route.useSearch();
   const navigate = useNavigate();
   const loading = useRouterState({ select: (s) => s.isLoading });
@@ -382,7 +384,10 @@ export const Route = createFileRoute('/list/table-list')({
   loader: async ({ deps }) => {
     // delay 1s
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    return await rule(deps);
+    // return await rule(deps);
+    const res = await fetch('/api/rule');
+    const data = await res.json();
+    return data;
   },
   validateSearch: z.object({
     current: z.number().optional(),

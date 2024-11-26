@@ -309,6 +309,6 @@ const data = {
 
 module.exports = {
   'GET /api/rule': (req, res) => {
-    res.send(data);
+    res.json(data);
   },
 };
