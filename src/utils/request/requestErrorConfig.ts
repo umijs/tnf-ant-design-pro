@@ -24,7 +24,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const errorConfig: RequestConfig = {
-  baseURL: 'https://proapi.azurewebsites.net/',
+  // baseURL: 'https://proapi.azurewebsites.net/',
   // 错误处理： umi@3 的错误处理方案。
   errorConfig: {
     // 错误抛出

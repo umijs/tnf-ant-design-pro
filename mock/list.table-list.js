@@ -301,14 +301,32 @@ const data = {
       progress: 46,
     },
   ],
-  total: 100,
-  success: true,
-  pageSize: 20,
-  current: 1,
+  total: 20,
 };
 
 module.exports = {
-  'GET /api/rule': (req, res) => {
-    res.json(data);
+  'GET /api/rule': async (req, res) => {
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
+    );
+
+    const { current = 1, pageSize = 5 } = req.query;
+    const pageNum = parseInt(current, 10);
+    const size = parseInt(pageSize, 10);
+
+    const start = (pageNum - 1) * size;
+    const end = start + size;
+
+    const paginatedData = data.data.slice(start, end);
+
+    const response = {
+      data: paginatedData,
+      total: data.total,
+      success: true,
+      pageSize: size,
+      current: pageNum,
+    };
+
+    res.json(response);
   },
 };
