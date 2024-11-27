@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Link,
   createFileRoute,
+  useLoaderData,
   useNavigate,
   useRouterState,
 } from '@umijs/tnf/router';
@@ -31,6 +32,8 @@ import {
   rule,
   updateRule,
 } from '../services/ant-design-pro/api';
+
+const PAGE_SIZE = 5;
 
 const handleAdd = async (fields: API.RuleListItem) => {
   const hide = message.loading('正在添加');
@@ -182,6 +185,7 @@ const TableList: React.FC = () => {
   ];
 
   const { data, total } = Route.useLoaderData();
+  // const { data, total } = useLoaderData({ from: '/list/table-list' });
   const search = Route.useSearch();
   const navigate = useNavigate();
   const loading = useRouterState({ select: (s) => s.isLoading });
@@ -222,7 +226,7 @@ const TableList: React.FC = () => {
         pagination={{
           total,
           current: search.current || 1,
-          pageSize: search.pageSize || 20,
+          pageSize: search.pageSize || PAGE_SIZE,
           onChange: (current, size) => {
             navigate({
               to: '/list/table-list',
@@ -238,10 +242,9 @@ const TableList: React.FC = () => {
               return (
                 <Link
                   to="/list/table-list"
-                  preload="intent"
                   search={{
                     current: page || 1,
-                    pageSize: search.pageSize || 20,
+                    pageSize: search.pageSize || PAGE_SIZE,
                   }}
                 >
                   {page}
@@ -263,7 +266,7 @@ const TableList: React.FC = () => {
         onReset={() => {
           navigate({
             to: '/list/table-list',
-            search: { current: 1, pageSize: 20 },
+            search: { current: 1, pageSize: PAGE_SIZE },
           });
         }}
       />
@@ -311,7 +314,7 @@ const TableList: React.FC = () => {
             handleModalOpen(false);
             navigate({
               to: '/list/table-list',
-              search: { current: 1, pageSize: 20 },
+              search: { current: 1, pageSize: PAGE_SIZE },
             });
           }
         }}
@@ -336,7 +339,7 @@ const TableList: React.FC = () => {
             setCurrentRow(undefined);
             navigate({
               to: '/list/table-list',
-              search: { current: 1, pageSize: 20 },
+              search: { current: 1, pageSize: PAGE_SIZE },
             });
           }
         }}
@@ -380,8 +383,10 @@ const TableList: React.FC = () => {
 export const Route = createFileRoute('/list/table-list')({
   component: TableList,
   loader: async ({ deps }) => {
-    // delay 1s
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // delay 随机 500ms - 1000ms
+    await new Promise((resolve) =>
+      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
+    );
     return await rule(deps);
   },
   validateSearch: z.object({
@@ -397,7 +402,7 @@ export const Route = createFileRoute('/list/table-list')({
     search: { current, pageSize, name, desc, callNo, status, updatedAt },
   }) => ({
     current: current || 1,
-    pageSize: pageSize || 20,
+    pageSize: pageSize || PAGE_SIZE,
     name,
     desc,
     callNo,
