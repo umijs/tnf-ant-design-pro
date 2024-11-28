@@ -75,18 +75,17 @@ const ListContent = ({
 };
 
 export const BasicList: FC = () => {
-  const { styles } = useStyles();
-  const [done, setDone] = useState<boolean>(false);
-  const [open, setVisible] = useState<boolean>(false);
-  const [current, setCurrent] = useState<
-    Partial<BasicListItemDataType> | undefined
-  >(undefined);
   const { deferredSlowData } = Route.useLoaderData();
-
-  console.log('deferredSlowData:', deferredSlowData);
   return (
     <Await promise={deferredSlowData} fallback={<Spin />}>
       {({ data }) => {
+        const { styles } = useStyles();
+        const [done, setDone] = useState<boolean>(false);
+        const [open, setVisible] = useState<boolean>(false);
+        const [current, setCurrent] = useState<
+          Partial<BasicListItemDataType> | undefined
+        >(undefined);
+
         const postRun = (method, params) => {
           if (method === 'remove') {
             return removeFakeList(params);
@@ -174,7 +173,6 @@ export const BasicList: FC = () => {
           const method = values?.id ? 'update' : 'add';
           postRun(method, values);
         };
-        console.log('data:', data);
         return (
           <div>
             <PageContainer>
@@ -266,7 +264,7 @@ export const BasicList: FC = () => {
 
 export const Route = createFileRoute('/list/basic-list')({
   component: BasicList,
-  loader: async () => {
+  loader: () => {
     const slowDataPromise = queryBasicList({ count: 50 });
     return {
       deferredSlowData: defer(slowDataPromise),
