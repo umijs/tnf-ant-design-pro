@@ -18,8 +18,8 @@ import {
   Result,
   Statistic,
 } from 'antd';
-import useStyles from '@/styles/form/step-form';
 import type { StepDataType } from '@/types/form/step-form';
+import useStyles from './form.step-form.style';
 
 const StepDescriptions: React.FC<{
   stepData: StepDataType;

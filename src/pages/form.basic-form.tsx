@@ -13,7 +13,7 @@ import {
 } from '@ant-design/pro-components';
 import { Card, message } from 'antd';
 import { fakeSubmitForm } from '@/services/ant-design-pro/form/basic-form';
-import useStyles from '@/styles/form/basic-form';
+import useStyles from './form.basic-form.style';
 
 const BasicForm: React.FC<Record<string, any>> = () => {
   const { styles } = useStyles();

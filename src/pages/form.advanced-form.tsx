@@ -15,7 +15,7 @@ import {
 } from '@ant-design/pro-components';
 import { Card, Col, Popover, Row, message } from 'antd';
 import { fakeSubmitForm } from '@/services/ant-design-pro/form/advanced-form';
-import useStyles from '@/styles/form/advanced-form';
+import useStyles from './form.advanced-form.style';
 
 interface TableFormDateType {
   key: string;
