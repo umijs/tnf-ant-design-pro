@@ -23,8 +23,8 @@ import {
   removeFakeList,
   updateFakeList,
 } from '@/services/ant-design-pro/api';
-import useStyles from '@/styles/basic-list';
 import type { BasicListItemDataType } from '@/types';
+import useStyles from './list.basic-list.style';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;

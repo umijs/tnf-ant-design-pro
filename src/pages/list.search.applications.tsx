@@ -22,8 +22,8 @@ import numeral from 'numeral';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
 import { queryFakeList } from '@/services/ant-design-pro/api';
-import useStyles from '@/styles/search-applications';
 import type { ListItemDataType } from '@/types';
+import useStyles from './list.search.applications.style';
 
 const categoryOptions = Array.from({ length: 12 }).map((_, index) => ({
   value: `cat${index + 1}`,

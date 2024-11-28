@@ -1,14 +1,14 @@
 import React, { type FC } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
-import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
+import { Card, Form, List, Typography } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import AvatarList from '@/components/AvatarList';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
 import { queryFakeList } from '@/services/ant-design-pro/api';
-import useStyles from '@/styles/search-projects';
 import type { ListItemDataType } from '@/types';
+import useStyles from './list.search.projects.style';
 
 dayjs.extend(relativeTime);
 

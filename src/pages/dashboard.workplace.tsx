@@ -11,8 +11,8 @@ import {
   queryActivities,
   queryProjectNotice,
 } from '@/services/ant-design-pro/dashboard/workplace';
-import useStyles from '@/styles/dashboard/workplace';
 import type { ActivitiesType, CurrentUser } from '@/types/dashboard/workplace';
+import useStyles from './dashboard.workplace.style';
 
 dayjs.extend(relativeTime);
 
