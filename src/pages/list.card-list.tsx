@@ -3,8 +3,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, List, Typography } from 'antd';
 import { queryCardList } from '@/services/ant-design-pro/api';
-import useStyles from '@/styles/card-list';
 import type { CardListItemDataType } from '@/types';
+import useStyles from './list.card-list.style';
 
 const { Paragraph } = Typography;
 const CardList = () => {

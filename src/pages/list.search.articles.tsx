@@ -2,14 +2,14 @@ import type { FC } from 'react';
 import React, { useMemo } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, List, Row, Select, Tag } from 'antd';
-import { DefaultOptionType } from 'antd/es/select';
+import { Button, Card, Form, List, Select, Tag } from 'antd';
+import type { DefaultOptionType } from 'antd/es/select';
 import ArticleListContent from '@/components/ArticleListContent';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
 import { queryFakeList } from '@/services/ant-design-pro/api';
-import useStyles from '@/styles/search-articles';
 import type { ListItemDataType } from '@/types';
+import useStyles from './list.search.articles.style';
 
 const categoryOptions = Array.from({ length: 12 }).map((_, index) => ({
   value: `cat${index + 1}`,
