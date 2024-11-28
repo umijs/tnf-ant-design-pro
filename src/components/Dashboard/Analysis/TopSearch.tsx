@@ -3,7 +3,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Area } from '@ant-design/plots';
 import { Card, Col, Row, Table, Tooltip } from 'antd';
 import numeral from 'numeral';
-import useStyles from '@/styles/dashboard/analysis';
+import useStyles from '@/pages/dashboard.analysis.style';
 import type { DataItem } from '@/types/dashboard/analysis';
 import NumberInfo from './NumberInfo';
 import Trend from './Trend';

@@ -3,7 +3,7 @@ import { Card, Col, DatePicker, Row, Tabs } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import type dayjs from 'dayjs';
 import numeral from 'numeral';
-import useStyles from '@/styles/dashboard/analysis';
+import useStyles from '@/pages/dashboard.analysis.style';
 import type { DataItem } from '@/types/dashboard/analysis';
 
 export type TimeType = 'today' | 'week' | 'month' | 'year';
