@@ -1,8 +1,8 @@
 import React from 'react';
-import { createFileRoute } from '@umijs/tnf/router';
+import { Await, createFileRoute, defer } from '@umijs/tnf/router';
 import { Gauge, Liquid, WordCloud } from '@ant-design/plots';
 import { GridContent } from '@ant-design/pro-components';
-import { Card, Col, Progress, Row, Statistic } from 'antd';
+import { Card, Col, Progress, Row, Spin, Statistic } from 'antd';
 import numeral from 'numeral';
 import ActiveChart from '@/components/Dashboard/Monitor/ActiveChart';
 import Map from '@/components/Dashboard/Monitor/Map';
@@ -16,13 +16,7 @@ const Monitor: React.FC = () => {
   const { styles } = useStyles();
 
   const { data } = Route.useLoaderData();
-  const wordCloudData = (data?.list || []).map((item) => {
-    return {
-      id: +Date.now(),
-      word: item.name,
-      weight: item.value,
-    };
-  });
+
   return (
     <GridContent>
       <>
@@ -162,13 +156,26 @@ const Monitor: React.FC = () => {
                 overflow: 'hidden',
               }}
             >
-              <WordCloud
-                data={wordCloudData}
-                height={162}
-                textField="word"
-                colorField="word"
-                layout={{ spiral: 'rectangular', fontSize: [10, 20] }}
-              />
+              <Await promise={data} fallback={<Spin />}>
+                {({ data }) => {
+                  const wordCloudData = (data?.list || []).map((item) => {
+                    return {
+                      id: +Date.now(),
+                      word: item.name,
+                      weight: item.value,
+                    };
+                  });
+                  return (
+                    <WordCloud
+                      data={wordCloudData}
+                      height={162}
+                      textField="word"
+                      colorField="word"
+                      layout={{ spiral: 'rectangular', fontSize: [10, 20] }}
+                    />
+                  );
+                }}
+              </Await>
             </Card>
           </Col>
           <Col
@@ -199,6 +206,9 @@ const Monitor: React.FC = () => {
 export const Route = createFileRoute('/dashboard/monitor')({
   component: Monitor,
   loader: async (params) => {
-    return await queryTags();
+    const queryTagsPromise = queryTags();
+    return {
+      data: defer(queryTagsPromise),
+    };
   },
 });
