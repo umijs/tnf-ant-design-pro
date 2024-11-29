@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { createFileRoute } from '@umijs/tnf/router';
+import { Await, createFileRoute, defer } from '@umijs/tnf/router';
 import {
   ClusterOutlined,
   ContactsOutlined,
@@ -7,7 +7,17 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
-import { Avatar, Card, Col, Divider, Input, InputRef, Row, Tag } from 'antd';
+import {
+  Avatar,
+  Card,
+  Col,
+  Divider,
+  Input,
+  InputRef,
+  Row,
+  Spin,
+  Tag,
+} from 'antd';
 import { createStyles } from 'antd-style';
 import Applications from '../components/Account/Applications';
 import Articles from '../components/Account/Center/Articles';
@@ -201,7 +211,7 @@ const Center: React.FC = () => {
   const [tabKey, setTabKey] = useState<tabKeyType>('articles');
 
   //  获取用户信息
-  const { data: currentUser } = Route.useLoaderData();
+  const { currentUser } = Route.useLoaderData();
 
   //  渲染用户信息
   const renderUserInfo = ({
@@ -279,38 +289,42 @@ const Center: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            {currentUser && (
-              <div>
-                <div className={styles.avatarHolder}>
-                  <img alt="" src={currentUser.avatar} />
-                  <div className={styles.name}>{currentUser.name}</div>
-                  <div>{currentUser?.signature}</div>
-                </div>
-                {renderUserInfo(currentUser)}
-                <Divider dashed />
-                <TagList tags={currentUser.tags || []} />
-                <Divider
-                  style={{
-                    marginTop: 16,
-                  }}
-                  dashed
-                />
-                <div className={styles.team}>
-                  <div className={styles.teamTitle}>团队</div>
-                  <Row gutter={36}>
-                    {currentUser.notice &&
-                      currentUser.notice.map((item) => (
-                        <Col key={item.id} lg={24} xl={12}>
-                          <a href={item.href}>
-                            <Avatar size="small" src={item.logo} />
-                            {item.member}
-                          </a>
-                        </Col>
-                      ))}
-                  </Row>
-                </div>
-              </div>
-            )}
+            <Await promise={currentUser} fallback={<Spin />}>
+              {({ data: currentUser }) => {
+                return (
+                  <div>
+                    <div className={styles.avatarHolder}>
+                      <img alt="" src={currentUser.avatar} />
+                      <div className={styles.name}>{currentUser.name}</div>
+                      <div>{currentUser?.signature}</div>
+                    </div>
+                    {renderUserInfo(currentUser)}
+                    <Divider dashed />
+                    <TagList tags={currentUser.tags || []} />
+                    <Divider
+                      style={{
+                        marginTop: 16,
+                      }}
+                      dashed
+                    />
+                    <div className={styles.team}>
+                      <div className={styles.teamTitle}>团队</div>
+                      <Row gutter={36}>
+                        {currentUser.notice &&
+                          currentUser.notice.map((item) => (
+                            <Col key={item.id} lg={24} xl={12}>
+                              <a href={item.href}>
+                                <Avatar size="small" src={item.logo} />
+                                {item.member}
+                              </a>
+                            </Col>
+                          ))}
+                      </Row>
+                    </div>
+                  </div>
+                );
+              }}
+            </Await>
           </Card>
         </Col>
         <Col lg={17} md={24}>
@@ -334,6 +348,9 @@ const Center: React.FC = () => {
 export const Route = createFileRoute('/account/center')({
   component: Center,
   loader: async (params) => {
-    return await queryCurrent();
+    const queryCurrentPromise = queryCurrent();
+    return {
+      currentUser: defer(queryCurrentPromise),
+    };
   },
 });
