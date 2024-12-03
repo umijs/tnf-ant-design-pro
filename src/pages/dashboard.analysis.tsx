@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { Suspense, useState } from 'react';
-import { Await, createFileRoute, defer } from '@umijs/tnf/router';
+import { createFileRoute } from '@umijs/tnf/router';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
-import { Col, Dropdown, Row, Spin } from 'antd';
+import { Col, Dropdown, Row } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import type dayjs from 'dayjs';
@@ -60,6 +60,17 @@ const Analysis: FC<AnalysisProps> = () => {
     return '';
   };
 
+  let salesPieData;
+
+  if (salesType === 'all') {
+    salesPieData = data?.salesTypeData;
+  } else {
+    salesPieData =
+      salesType === 'online'
+        ? data?.salesTypeDataOnline
+        : data?.salesTypeDataOffline;
+  }
+
   const dropdownGroup = (
     <span className={styles.iconGroup}>
       <Dropdown
@@ -87,90 +98,68 @@ const Analysis: FC<AnalysisProps> = () => {
   const handleTabChange = (key: string) => {
     setCurrentTabKey(key);
   };
-
+  const activeKey =
+    currentTabKey || (data?.offlineData[0] && data?.offlineData[0].name) || '';
   return (
-    <Await promise={data} fallback={<Spin />}>
-      {({ data }) => {
-        const activeKey =
-          currentTabKey ||
-          (data?.offlineData[0] && data?.offlineData[0].name) ||
-          '';
-        let salesPieData;
+    <GridContent>
+      <>
+        <Suspense fallback={<PageLoading />}>
+          <IntroduceRow visitData={data?.visitData || []} />
+        </Suspense>
 
-        if (salesType === 'all') {
-          salesPieData = data?.salesTypeData;
-        } else {
-          salesPieData =
-            salesType === 'online'
-              ? data?.salesTypeDataOnline
-              : data?.salesTypeDataOffline;
-        }
-        return (
-          <GridContent>
-            <>
-              <Suspense fallback={<PageLoading />}>
-                <IntroduceRow visitData={data?.visitData || []} />
-              </Suspense>
+        <Suspense fallback={null}>
+          <SalesCard
+            rangePickerValue={rangePickerValue}
+            salesData={data?.salesData || []}
+            isActive={isActive}
+            handleRangePickerChange={handleRangePickerChange}
+            selectDate={selectDate}
+          />
+        </Suspense>
 
-              <Suspense fallback={null}>
-                <SalesCard
-                  rangePickerValue={rangePickerValue}
-                  salesData={data?.salesData || []}
-                  isActive={isActive}
-                  handleRangePickerChange={handleRangePickerChange}
-                  selectDate={selectDate}
-                />
-              </Suspense>
+        <Row
+          gutter={24}
+          style={{
+            marginTop: 24,
+          }}
+        >
+          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+            <Suspense fallback={null}>
+              <TopSearch
+                visitData2={data?.visitData2 || []}
+                searchData={data?.searchData || []}
+                dropdownGroup={dropdownGroup}
+              />
+            </Suspense>
+          </Col>
+          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+            <Suspense fallback={null}>
+              <ProportionSales
+                dropdownGroup={dropdownGroup}
+                salesType={salesType}
+                salesPieData={salesPieData || []}
+                handleChangeSalesType={handleChangeSalesType}
+              />
+            </Suspense>
+          </Col>
+        </Row>
 
-              <Row
-                gutter={24}
-                style={{
-                  marginTop: 24,
-                }}
-              >
-                <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-                  <Suspense fallback={null}>
-                    <TopSearch
-                      visitData2={data?.visitData2 || []}
-                      searchData={data?.searchData || []}
-                      dropdownGroup={dropdownGroup}
-                    />
-                  </Suspense>
-                </Col>
-                <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-                  <Suspense fallback={null}>
-                    <ProportionSales
-                      dropdownGroup={dropdownGroup}
-                      salesType={salesType}
-                      salesPieData={salesPieData || []}
-                      handleChangeSalesType={handleChangeSalesType}
-                    />
-                  </Suspense>
-                </Col>
-              </Row>
-
-              <Suspense fallback={null}>
-                <OfflineData
-                  activeKey={activeKey}
-                  offlineData={data?.offlineData || []}
-                  offlineChartData={data?.offlineChartData || []}
-                  handleTabChange={handleTabChange}
-                />
-              </Suspense>
-            </>
-          </GridContent>
-        );
-      }}
-    </Await>
+        <Suspense fallback={null}>
+          <OfflineData
+            activeKey={activeKey}
+            offlineData={data?.offlineData || []}
+            offlineChartData={data?.offlineChartData || []}
+            handleTabChange={handleTabChange}
+          />
+        </Suspense>
+      </>
+    </GridContent>
   );
 };
 export default Analysis;
 export const Route = createFileRoute('/dashboard/analysis')({
   component: Analysis,
   loader: async (params) => {
-    const fakeChartDataPromise = fakeChartData();
-    return {
-      data: defer(fakeChartDataPromise),
-    };
+    return await fakeChartData();
   },
 });

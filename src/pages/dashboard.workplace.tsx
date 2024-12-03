@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import { Await, Link, createFileRoute, defer } from '@umijs/tnf/router';
+import { Link, createFileRoute } from '@umijs/tnf/router';
 import { Radar } from '@ant-design/plots';
 import { PageContainer } from '@ant-design/pro-components';
-import { Avatar, Card, Col, List, Row, Skeleton, Spin, Statistic } from 'antd';
+import { Avatar, Card, Col, List, Row, Skeleton, Statistic } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import EditableLinkGroup from '@/components/Dashboard/Workplace/EditableLinkGroup';
@@ -149,58 +149,47 @@ const Workplace: FC = () => {
     >
       <Row gutter={24}>
         <Col xl={16} lg={24} md={24} sm={24} xs={24}>
-          <Await promise={projectNotice} fallback={<Spin />}>
-            {({ data }) => {
-              return (
+          <Card
+            className={styles.projectList}
+            style={{
+              marginBottom: 24,
+            }}
+            title="进行中的项目"
+            bordered={false}
+            extra={<Link to="/">全部项目</Link>}
+            bodyStyle={{
+              padding: 0,
+            }}
+          >
+            {projectNotice.map((item) => (
+              <Card.Grid className={styles.projectGrid} key={item.id}>
                 <Card
-                  className={styles.projectList}
-                  style={{
-                    marginBottom: 24,
-                  }}
-                  title="进行中的项目"
-                  bordered={false}
-                  extra={<Link to="/">全部项目</Link>}
                   bodyStyle={{
                     padding: 0,
                   }}
+                  bordered={false}
                 >
-                  {data.map((item) => (
-                    <Card.Grid className={styles.projectGrid} key={item.id}>
-                      <Card
-                        bodyStyle={{
-                          padding: 0,
-                        }}
-                        bordered={false}
-                      >
-                        <Card.Meta
-                          title={
-                            <div className={styles.cardTitle}>
-                              <Avatar size="small" src={item.logo} />
-                              <Link to={item.href || '/'}>{item.title}</Link>
-                            </div>
-                          }
-                          description={item.description}
-                        />
-                        <div className={styles.projectItemContent}>
-                          <Link to={item.memberLink || '/'}>
-                            {item.member || ''}
-                          </Link>
-                          {item.updatedAt && (
-                            <span
-                              className={styles.datetime}
-                              title={item.updatedAt}
-                            >
-                              {dayjs(item.updatedAt).fromNow()}
-                            </span>
-                          )}
-                        </div>
-                      </Card>
-                    </Card.Grid>
-                  ))}
+                  <Card.Meta
+                    title={
+                      <div className={styles.cardTitle}>
+                        <Avatar size="small" src={item.logo} />
+                        <Link to={item.href || '/'}>{item.title}</Link>
+                      </div>
+                    }
+                    description={item.description}
+                  />
+                  <div className={styles.projectItemContent}>
+                    <Link to={item.memberLink || '/'}>{item.member || ''}</Link>
+                    {item.updatedAt && (
+                      <span className={styles.datetime} title={item.updatedAt}>
+                        {dayjs(item.updatedAt).fromNow()}
+                      </span>
+                    )}
+                  </div>
                 </Card>
-              );
-            }}
-          </Await>
+              </Card.Grid>
+            ))}
+          </Card>
           <Card
             bodyStyle={{
               padding: 0,
@@ -209,18 +198,12 @@ const Workplace: FC = () => {
             className={styles.activeCard}
             title="动态"
           >
-            <Await promise={activities} fallback={<Spin />}>
-              {({ data }) => {
-                return (
-                  <List<ActivitiesType>
-                    renderItem={(item) => renderActivities(item)}
-                    dataSource={data}
-                    className={styles.activitiesList}
-                    size="large"
-                  />
-                );
-              }}
-            </Await>
+            <List<ActivitiesType>
+              renderItem={(item) => renderActivities(item)}
+              dataSource={activities}
+              className={styles.activitiesList}
+              size="large"
+            />
           </Card>
         </Col>
         <Col xl={8} lg={24} md={24} sm={24} xs={24}>
@@ -240,47 +223,41 @@ const Workplace: FC = () => {
               linkElement={Link}
             />
           </Card>
-          <Await promise={data} fallback={<Spin />}>
-            {({ data }) => {
-              return (
-                <Card
-                  style={{
-                    marginBottom: 24,
-                  }}
-                  bordered={false}
-                  title="XX 指数"
-                  loading={data?.radarData?.length === 0}
-                >
-                  <div>
-                    <Radar
-                      height={343}
-                      data={data?.radarData || []}
-                      xField="label"
-                      colorField="name"
-                      yField="value"
-                      shapeField="smooth"
-                      area={{
-                        style: {
-                          fillOpacity: 0.4,
-                        },
-                      }}
-                      axis={{
-                        y: {
-                          gridStrokeOpacity: 0.5,
-                        },
-                      }}
-                      legend={{
-                        color: {
-                          position: 'bottom',
-                          layout: { justifyContent: 'center' },
-                        },
-                      }}
-                    />
-                  </div>
-                </Card>
-              );
+          <Card
+            style={{
+              marginBottom: 24,
             }}
-          </Await>
+            bordered={false}
+            title="XX 指数"
+            loading={data?.radarData?.length === 0}
+          >
+            <div>
+              <Radar
+                height={343}
+                data={data?.radarData || []}
+                xField="label"
+                colorField="name"
+                yField="value"
+                shapeField="smooth"
+                area={{
+                  style: {
+                    fillOpacity: 0.4,
+                  },
+                }}
+                axis={{
+                  y: {
+                    gridStrokeOpacity: 0.5,
+                  },
+                }}
+                legend={{
+                  color: {
+                    position: 'bottom',
+                    layout: { justifyContent: 'center' },
+                  },
+                }}
+              />
+            </div>
+          </Card>
           <Card
             bodyStyle={{
               paddingTop: 12,
@@ -289,28 +266,22 @@ const Workplace: FC = () => {
             bordered={false}
             title="团队"
           >
-            <Await promise={projectNotice} fallback={<Spin />}>
-              {({ data }) => {
-                return (
-                  <div className={styles.members}>
-                    <Row gutter={48}>
-                      {data.map((item) => {
-                        return (
-                          <Col span={12} key={`members-item-${item.id}`}>
-                            <a>
-                              <Avatar src={item.logo} size="small" />
-                              <span className={styles.member}>
-                                {item.member.substring(0, 3)}
-                              </span>
-                            </a>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </div>
-                );
-              }}
-            </Await>
+            <div className={styles.members}>
+              <Row gutter={48}>
+                {projectNotice.map((item) => {
+                  return (
+                    <Col span={12} key={`members-item-${item.id}`}>
+                      <a>
+                        <Avatar src={item.logo} size="small" />
+                        <span className={styles.member}>
+                          {item.member.substring(0, 3)}
+                        </span>
+                      </a>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
           </Card>
         </Col>
       </Row>
@@ -320,13 +291,9 @@ const Workplace: FC = () => {
 export const Route = createFileRoute('/dashboard/workplace')({
   component: Workplace,
   loader: async (params) => {
-    const queryProjectNoticePromise = queryProjectNotice();
-    const queryActivitiesPromise = queryActivities();
-    const fakeChartDataPromise = fakeChartData();
-    return {
-      projectNotice: defer(queryProjectNoticePromise),
-      activities: defer(queryActivitiesPromise),
-      data: defer(fakeChartDataPromise),
-    };
+    const { data: projectNotice = [] } = await queryProjectNotice();
+    const { data: activities = [] } = await queryActivities();
+    const { data } = await fakeChartData();
+    return { projectNotice, activities, data };
   },
 });
