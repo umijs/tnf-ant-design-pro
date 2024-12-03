@@ -19,7 +19,7 @@
     "@ant-design/pro-layout": "^7.21.2",
     "@antv/l7": "^2.22.3",
     "@antv/l7-react": "^2.4.3",
-    "@umijs/tnf": "^0.1.6",
+    "@umijs/tnf": "^0.1.7",
     "antd": "^5.22.3",
     "antd-style": "^3.7.0",
     "axios": "^1.7.8",
