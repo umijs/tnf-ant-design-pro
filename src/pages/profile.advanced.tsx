@@ -28,7 +28,7 @@ import {
   Tooltip,
 } from 'antd';
 import classNames from 'classnames';
-import { queryAdvancedProfile } from '@/services/ant-design-pro/api';
+import { queryAdvancedProfile } from '@/services/api';
 import styles from './profile.advanced.module.less';
 
 const { Step } = Steps;
@@ -492,6 +492,5 @@ const ProfileAdvanced: FC = () => {
 
 export const Route = createFileRoute('/profile/advanced')({
   component: ProfileAdvanced,
-  loader: async () => await queryAdvancedProfile(),
-  pendingComponent: () => null,
+  loader: queryAdvancedProfile,
 });

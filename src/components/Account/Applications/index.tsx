@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
 import numeral from 'numeral';
-import { queryFakeList } from '@/services/ant-design-pro/account/center';
+import { queryFakeList } from '@/services/account/center';
 import type { ListItemDataType } from '@/types/account/center';
 import useStyles from './index.style';
 

@@ -6,21 +6,19 @@ import type {
   ListItemDataType,
   Params,
 } from '@/types';
-import { request } from '@/utils/request';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<{
-    data: API.CurrentUser;
-  }>('/api/currentUser', {
+  const response = await fetch('/api/currentUser', {
     method: 'GET',
     ...(options || {}),
   });
+  return await response.json();
 }
 
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/login/outLogin', {
+  return fetch('/api/login/outLogin', {
     method: 'POST',
     ...(options || {}),
   });
@@ -31,22 +29,15 @@ export async function login(
   body: API.LoginParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.LoginResult>('/api/login/account', {
+  const response = await fetch('/api/login/account', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
+    body: JSON.stringify(body),
     ...(options || {}),
   });
-}
-
-/** 此处后端没有提供注释 GET /api/notices */
-export async function getNotices(options?: { [key: string]: any }) {
-  return request<API.NoticeIconList>('/api/notices', {
-    method: 'GET',
-    ...(options || {}),
-  });
+  return await response.json();
 }
 
 /** 获取规则列表 GET /api/rule */
@@ -60,45 +51,56 @@ export async function rule(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.RuleList>('/api/rule', {
-    method: 'GET',
-    params: {
-      ...params,
+  const response = await fetch('/api/rule', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(params),
     ...(options || {}),
   });
+  return await response.json();
 }
 
 /** 更新规则 PUT /api/rule */
 export async function updateRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
+  return fetch('/api/rule', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       method: 'update',
       ...(options || {}),
-    },
+    }),
   });
 }
 
 /** 新建规则 POST /api/rule */
 export async function addRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
+  return fetch('/api/rule', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       method: 'post',
       ...(options || {}),
-    },
+    }),
   });
 }
 
 /** 删除规则 DELETE /api/rule */
 export async function removeRule(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/rule', {
+  return fetch('/api/rule', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       method: 'delete',
       ...(options || {}),
-    },
+    }),
   });
 }
 
@@ -108,73 +110,90 @@ export async function queryBasicProfile(): Promise<{
     basicGoods: BasicGood[];
   };
 }> {
-  return request('/api/profile/basic');
+  const response = await fetch('/api/profile/basic');
+  return await response.json();
 }
 
 export async function queryAdvancedProfile() {
-  return request('/api/profile/advanced');
+  const response = await fetch('/api/profile/advanced');
+  return await response.json();
 }
 
 export async function queryFakeList(
   params: Params,
 ): Promise<{ data: { list: ListItemDataType[] } }> {
-  return request('/api/fake_list', {
-    params,
-  });
+  const response = await fetch(
+    `/api/fake_list?${new URLSearchParams({ count: params.count.toString() })}`,
+  );
+  return await response.json();
+}
+
+export async function queryBasicList(
+  params: Params,
+): Promise<{ data: { list: BasicListItemDataType[] } }> {
+  const response = await fetch(
+    `/api/get_list?${new URLSearchParams({ count: params.count.toString() })}`,
+  );
+  return await response.json();
 }
 
 type ParamsType = {
   count?: number;
 } & Partial<BasicListItemDataType>;
 
-export async function queryBasicList(
-  params: ParamsType,
-): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  return request('/api/get_list', {
-    params,
-  });
-}
-
 export async function removeFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  return request('/api/post_fake_list', {
+  const response = await fetch('/api/post_fake_list', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       ...params,
       method: 'delete',
-    },
+    }),
   });
+  return await response.json();
 }
 
 export async function addFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  return request('/api/post_fake_list', {
+  const response = await fetch('/api/post_fake_list', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       ...params,
       method: 'post',
-    },
+    }),
   });
+  return await response.json();
 }
 
 export async function updateFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  return request('/api/post_fake_list', {
+  const response = await fetch('/api/post_fake_list', {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       ...params,
       method: 'update',
-    },
+    }),
   });
+  return await response.json();
 }
 
-export async function queryCardList(params: {
-  count: number;
-}): Promise<{ data: { list: CardListItemDataType[] } }> {
-  return request('/api/card_fake_list', {
-    params,
-  });
+export async function queryCardList(
+  params: Params,
+): Promise<{ data: { list: CardListItemDataType[] } }> {
+  const response = await fetch(
+    `/api/card_fake_list?${new URLSearchParams({ count: params.count.toString() })}`,
+  );
+  return await response.json();
 }

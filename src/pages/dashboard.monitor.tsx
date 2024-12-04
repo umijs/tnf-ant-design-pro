@@ -6,7 +6,7 @@ import { Card, Col, Progress, Row, Statistic } from 'antd';
 import numeral from 'numeral';
 import ActiveChart from '@/components/Dashboard/Monitor/ActiveChart';
 import Map from '@/components/Dashboard/Monitor/Map';
-import { queryTags } from '@/services/ant-design-pro/dashboard/monitor';
+import { queryTags } from '@/services/dashboard/monitor';
 import useStyles from './dashboard.monitor.style';
 
 const { Countdown } = Statistic;

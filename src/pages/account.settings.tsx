@@ -6,7 +6,7 @@ import BaseView from '@/components/Account/Settings/base';
 import BindingView from '@/components/Account/Settings/binding';
 import NotificationView from '@/components/Account/Settings/notification';
 import SecurityView from '@/components/Account/Settings/security';
-import { queryCurrent } from '@/services/ant-design-pro/account/settings';
+import { queryCurrent } from '@/services/account/settings';
 import useStyles from './account.settings.style';
 
 type SettingsStateKeys = 'base' | 'security' | 'binding' | 'notification';

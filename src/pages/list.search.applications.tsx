@@ -21,7 +21,7 @@ import {
 import numeral from 'numeral';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
-import { queryFakeList } from '@/services/ant-design-pro/api';
+import { queryFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types';
 import useStyles from './list.search.applications.style';
 
@@ -226,5 +226,5 @@ export const Applications: FC<Record<string, any>> = () => {
 
 export const Route = createFileRoute('/list/search/applications')({
   component: Applications,
-  loader: async () => await queryFakeList({ count: 8 }),
+  loader: () => queryFakeList({ count: 8 }),
 });

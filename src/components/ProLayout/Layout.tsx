@@ -3,7 +3,9 @@ import { Link, Outlet, useLocation, useNavigate } from '@umijs/tnf/router';
 import { LogoutOutlined } from '@ant-design/icons';
 import { ProLayout } from '@ant-design/pro-components';
 import { Dropdown } from 'antd';
+import { stringify } from 'querystring';
 import { Footer, Question } from '../';
+import { outLogin } from '../../services/api';
 import Exception from './Exception';
 import './Layout.css';
 import Logo from './Logo';
@@ -39,10 +41,10 @@ const mapRoutes = (routes: any[]) => {
 
 export default (props: any) => {
   const location = useLocation();
+  const navigate = useNavigate();
   if (isLoginPath(location.pathname)) {
     return <Outlet />;
   }
-  const navigate = useNavigate();
   const initialInfo = {
     initialState: undefined,
     loading: false,
@@ -67,13 +69,6 @@ export default (props: any) => {
   const formatMessage = undefined;
   const runtimeConfig = {
     actionsRender: () => [<Question key="doc" />],
-    // avatarProps: {
-    //   src: initialState?.currentUser?.avatar,
-    //   title: <AvatarName />,
-    //   render: (_, avatarChildren) => {
-    //     return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
-    //   },
-    // },
     footerRender: () => <Footer />,
     onPageChange: () => {
       console.log(
@@ -109,6 +104,25 @@ export default (props: any) => {
     ],
     links: [],
     menuHeaderRender: undefined,
+  };
+
+  const loginOut = async () => {
+    await outLogin();
+
+    const { search, pathname } = window.location;
+    const urlParams = new URL(window.location.href).searchParams;
+    /** 此方法会跳转到 redirect 参数所在的位置 */
+    const redirect = urlParams.get('redirect');
+    // Note: There may be security issues, please note
+    if (window.location.pathname !== '/user/login' && !redirect) {
+      navigate({
+        replace: true,
+        to: '/user/login',
+        search: stringify({
+          redirect: pathname + search,
+        }),
+      });
+    }
   };
 
   patchRoutes({ routes: route });
@@ -174,6 +188,7 @@ export default (props: any) => {
                     key: 'logout',
                     icon: <LogoutOutlined />,
                     label: '退出登录',
+                    onClick: loginOut,
                   },
                 ],
               }}

@@ -10,7 +10,7 @@ import {
   fakeChartData,
   queryActivities,
   queryProjectNotice,
-} from '@/services/ant-design-pro/dashboard/workplace';
+} from '@/services/dashboard/workplace';
 import type { ActivitiesType, CurrentUser } from '@/types/dashboard/workplace';
 import useStyles from './dashboard.workplace.style';
 
