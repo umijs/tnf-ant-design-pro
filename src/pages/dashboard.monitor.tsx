@@ -198,7 +198,5 @@ const Monitor: React.FC = () => {
 };
 export const Route = createFileRoute('/dashboard/monitor')({
   component: Monitor,
-  loader: async (params) => {
-    return await queryTags();
-  },
+  loader: queryTags,
 });

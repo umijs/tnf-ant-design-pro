@@ -114,7 +114,5 @@ const Settings: React.FC = () => {
 
 export const Route = createFileRoute('/account/settings')({
   component: Settings,
-  loader: async (params) => {
-    return await queryCurrent();
-  },
+  loader: queryCurrent,
 });

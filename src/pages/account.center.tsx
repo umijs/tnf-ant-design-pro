@@ -333,7 +333,5 @@ const Center: React.FC = () => {
 
 export const Route = createFileRoute('/account/center')({
   component: Center,
-  loader: async (params) => {
-    return await queryAccountCenterCurrent();
-  },
+  loader: queryAccountCenterCurrent,
 });

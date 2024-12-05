@@ -159,7 +159,5 @@ const Analysis: FC<AnalysisProps> = () => {
 export default Analysis;
 export const Route = createFileRoute('/dashboard/analysis')({
   component: Analysis,
-  loader: async (params) => {
-    return await fakeDashboardAnalysisChartData();
-  },
+  loader: fakeDashboardAnalysisChartData,
 });
