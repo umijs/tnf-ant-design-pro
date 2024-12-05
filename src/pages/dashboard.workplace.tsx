@@ -10,7 +10,7 @@ import {
   fakeChartData,
   queryActivities,
   queryProjectNotice,
-} from '@/services/dashboard/workplace';
+} from '@/services/api';
 import type { ActivitiesType, CurrentUser } from '@/types/dashboard/workplace';
 import useStyles from './dashboard.workplace.style';
 

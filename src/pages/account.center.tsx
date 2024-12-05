@@ -12,7 +12,7 @@ import { createStyles } from 'antd-style';
 import Applications from '../components/Account/Applications';
 import Articles from '../components/Account/Center/Articles';
 import Projects from '../components/Account/Center/Projects';
-import { queryCurrent } from '../services/account/center';
+import { queryAccountCenterCurrent } from '../services/api';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -333,7 +333,5 @@ const Center: React.FC = () => {
 
 export const Route = createFileRoute('/account/center')({
   component: Center,
-  loader: async (params) => {
-    return await queryCurrent();
-  },
+  loader: queryAccountCenterCurrent,
 });

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, List } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { queryFakeList } from '@/services/account/center';
+import { queryFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types/account/center';
 import AvatarList from '../AvatarList';
 import useStyles from './index.style';

@@ -12,7 +12,7 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Card, message } from 'antd';
-import { fakeSubmitForm } from '@/services/form/basic-form';
+import { fakeSubmitForm } from '@/services/api';
 import useStyles from './form.basic-form.style';
 
 const BasicForm: React.FC<Record<string, any>> = () => {

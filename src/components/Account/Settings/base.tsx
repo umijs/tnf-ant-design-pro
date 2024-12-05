@@ -9,7 +9,7 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Input, Upload, message } from 'antd';
-import { queryCity, queryProvince } from '@/services/account/settings';
+import { queryCity, queryProvince } from '@/services/api';
 import useStyles from './index.style';
 
 const validatorPhone = (

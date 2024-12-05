@@ -14,7 +14,7 @@ import ProportionSales from '@/components/Dashboard/Analysis/ProportionSales';
 import type { TimeType } from '@/components/Dashboard/Analysis/SalesCard';
 import SalesCard from '@/components/Dashboard/Analysis/SalesCard';
 import TopSearch from '@/components/Dashboard/Analysis/TopSearch';
-import { fakeChartData } from '@/services/dashboard/analysis';
+import { fakeDashboardAnalysisChartData } from '@/services/api';
 import type { AnalysisData } from '@/types/dashboard/analysis';
 import { getTimeDistance } from '@/utils/dashboard/utils';
 import useStyles from './dashboard.analysis.style';
@@ -159,7 +159,5 @@ const Analysis: FC<AnalysisProps> = () => {
 export default Analysis;
 export const Route = createFileRoute('/dashboard/analysis')({
   component: Analysis,
-  loader: async (params) => {
-    return await fakeChartData();
-  },
+  loader: fakeDashboardAnalysisChartData,
 });

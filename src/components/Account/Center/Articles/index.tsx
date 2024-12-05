@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LikeOutlined, MessageFilled, StarTwoTone } from '@ant-design/icons';
 import { List, Tag } from 'antd';
-import { queryFakeList } from '@/services/account/center';
+import { queryFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types/account/center';
 import ArticleListContent from '../ArticleListContent';
 import useStyles from './index.style';

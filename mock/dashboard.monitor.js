@@ -506,11 +506,6 @@ const data = {
 };
 module.exports = {
   'GET /api/tags': (req, res) => {
-    setTimeout(
-      () => {
-        res.json(data);
-      },
-      Math.random(5, 10) * 1000,
-    );
+    res.json(data);
   },
 };
