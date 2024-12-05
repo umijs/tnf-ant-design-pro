@@ -2,7 +2,10 @@ export default {
   router: {
     defaultPreload: 'intent',
     convention: {
-      routeFileIgnorePattern: '.(style.ts)',
+      routeFileIgnorePattern: '.style.ts',
     },
+  },
+  mock: {
+    delay: '500-1000',
   },
 };

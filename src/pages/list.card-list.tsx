@@ -2,7 +2,7 @@ import { createFileRoute } from '@umijs/tnf/router';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, List, Typography } from 'antd';
-import { queryCardList } from '@/services/ant-design-pro/api';
+import { queryCardList } from '@/services/api';
 import type { CardListItemDataType } from '@/types';
 import useStyles from './list.card-list.style';
 
@@ -120,5 +120,5 @@ const CardList = () => {
 
 export const Route = createFileRoute('/list/card-list')({
   component: CardList,
-  loader: async () => await queryCardList({ count: 8 }),
+  loader: () => queryCardList({ count: 8 }),
 });

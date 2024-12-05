@@ -14,10 +14,10 @@ import ProportionSales from '@/components/Dashboard/Analysis/ProportionSales';
 import type { TimeType } from '@/components/Dashboard/Analysis/SalesCard';
 import SalesCard from '@/components/Dashboard/Analysis/SalesCard';
 import TopSearch from '@/components/Dashboard/Analysis/TopSearch';
-import { fakeChartData } from '@/services/ant-design-pro/dashboard/analysis';
-import useStyles from '@/styles/dashboard/analysis';
+import { fakeChartData } from '@/services/dashboard/analysis';
 import type { AnalysisData } from '@/types/dashboard/analysis';
 import { getTimeDistance } from '@/utils/dashboard/utils';
+import useStyles from './dashboard.analysis.style';
 
 type RangePickerValue = RangePickerProps<dayjs.Dayjs>['value'];
 type AnalysisProps = {

@@ -7,7 +7,7 @@ import type { DefaultOptionType } from 'antd/es/select';
 import ArticleListContent from '@/components/ArticleListContent';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
-import { queryFakeList } from '@/services/ant-design-pro/api';
+import { queryFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types';
 import useStyles from './list.search.articles.style';
 
@@ -204,5 +204,5 @@ const Articles: FC = () => {
 
 export const Route = createFileRoute('/list/search/articles')({
   component: Articles,
-  loader: async () => await queryFakeList({ count: pageSize }),
+  loader: () => queryFakeList({ count: pageSize }),
 });

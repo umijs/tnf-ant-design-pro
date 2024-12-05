@@ -305,12 +305,8 @@ const data = {
 };
 
 module.exports = {
-  'GET /api/rule': async (req, res) => {
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
-    );
-
-    const { current = 1, pageSize = 5 } = req.query;
+  'POST /api/rule': async (req, res) => {
+    const { current = 1, pageSize = 5 } = req.body;
     const pageNum = parseInt(current, 10);
     const size = parseInt(pageSize, 10);
 

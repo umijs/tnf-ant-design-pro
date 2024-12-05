@@ -4,7 +4,7 @@ import { createFileRoute } from '@umijs/tnf/router';
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Badge, Card, Descriptions, Divider } from 'antd';
-import { queryBasicProfile } from '@/services/ant-design-pro/api';
+import { queryBasicProfile } from '@/services/api';
 import type { BasicGood, BasicProgress } from '@/types';
 import styles from './profile.basic.module.less';
 
@@ -234,5 +234,5 @@ const ProfileBasic: FC = () => {
 
 export const Route = createFileRoute('/profile/basic')({
   component: ProfileBasic,
-  loader: async () => await queryBasicProfile(),
+  loader: queryBasicProfile,
 });

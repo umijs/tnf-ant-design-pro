@@ -12,7 +12,7 @@ import { createStyles } from 'antd-style';
 import Applications from '../components/Account/Applications';
 import Articles from '../components/Account/Center/Articles';
 import Projects from '../components/Account/Center/Projects';
-import { queryCurrent } from '../services/ant-design-pro/account/center';
+import { queryCurrent } from '../services/account/center';
 
 const useStyles = createStyles(({ token }) => {
   return {

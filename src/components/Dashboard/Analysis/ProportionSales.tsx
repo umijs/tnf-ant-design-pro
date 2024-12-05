@@ -3,7 +3,7 @@ import { Pie } from '@ant-design/plots';
 import { Card, Radio, Typography } from 'antd';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import numeral from 'numeral';
-import useStyles from '@/styles/dashboard/analysis';
+import useStyles from '@/pages/dashboard.analysis.style';
 import type { DataItem } from '@/types/dashboard/analysis';
 
 const { Text } = Typography;
