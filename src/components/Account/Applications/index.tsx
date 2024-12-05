@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
 import numeral from 'numeral';
-import { queryFakeList } from '@/services/account/center';
+import { queryAccountCenterFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types/account/center';
 import useStyles from './index.style';
 
@@ -41,7 +41,7 @@ const Applications: React.FC = () => {
 
   // 获取tab列表数据
   const fetchData = async () => {
-    const { data: listData } = await queryFakeList({
+    const { data: listData } = await queryAccountCenterFakeList({
       count: 30,
     });
     setListData(listData);

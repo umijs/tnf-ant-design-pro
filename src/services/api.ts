@@ -1,9 +1,15 @@
 import type {
+  ActivitiesType,
+  AnalysisData,
   BasicGood,
   BasicListItemDataType,
   BasicProgress,
   CardListItemDataType,
+  CurrentUser,
+  GeographicItemType,
   ListItemDataType,
+  MonitorTagType,
+  NoticeType,
   Params,
 } from '@/types';
 
@@ -195,5 +201,89 @@ export async function queryCardList(
   const response = await fetch(
     `/api/card_fake_list?${new URLSearchParams({ count: params.count.toString() })}`,
   );
+  return await response.json();
+}
+
+export async function queryAccountCenterCurrent(): Promise<{
+  data: CurrentUser;
+}> {
+  const response = await fetch('/api/currentUserDetail');
+  return await response.json();
+}
+
+export async function queryAccountCenterFakeList(
+  params: Params,
+): Promise<{ data: { list: ListItemDataType[] } }> {
+  const newparams = new URLSearchParams({
+    count: params.count.toString(),
+  });
+  const response = await fetch(`/api/fake_list_Detail?${newparams}`);
+  return await response.json();
+}
+
+export async function queryCurrent(): Promise<{ data: CurrentUser }> {
+  const response = await fetch('/api/accountSettingCurrentUser');
+  return await response.json();
+}
+
+export async function queryProvince(): Promise<{ data: GeographicItemType[] }> {
+  const response = await fetch('/api/geographic/province');
+  return await response.json();
+}
+
+export async function queryCity(
+  province: string,
+): Promise<{ data: GeographicItemType[] }> {
+  const response = await fetch(`/api/geographic/city/${province}`);
+  return await response.json();
+}
+
+export async function query() {
+  const response = await fetch('/api/users');
+  return await response.json();
+}
+
+export async function fakeDashboardAnalysisChartData(): Promise<{
+  data: AnalysisData;
+}> {
+  const response = await fetch('/api/fake_analysis_chart_data');
+  return await response.json();
+}
+
+export async function queryTags(): Promise<{
+  data: { list: MonitorTagType[] };
+}> {
+  const response = await fetch('/api/tags');
+  return await response.json();
+}
+
+export async function queryProjectNotice(): Promise<{ data: NoticeType[] }> {
+  const response = await fetch('/api/project/notice');
+  return await response.json();
+}
+
+export async function queryActivities(): Promise<{ data: ActivitiesType[] }> {
+  const response = await fetch('/api/activities');
+  return await response.json();
+}
+
+export async function fakeChartData(): Promise<{ data: AnalysisData }> {
+  const response = await fetch('/api/fake_workplace_chart_data');
+  return await response.json();
+}
+
+export async function fakeFormAdvancedSubmitForm(params: any) {
+  const response = await fetch('/api/advancedForm', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+  return await response.json();
+}
+
+export async function fakeSubmitForm(params: any) {
+  const response = await fetch('/api/basicForm', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
   return await response.json();
 }
