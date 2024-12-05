@@ -1,5 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { createFileRoute } from '@umijs/tnf/router';
+import {
+  Outlet,
+  createFileRoute,
+  useLocation,
+  useNavigate,
+} from '@umijs/tnf/router';
 import {
   ClusterOutlined,
   ContactsOutlined,
@@ -7,12 +12,11 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
-import { Avatar, Card, Col, Divider, Input, InputRef, Row, Tag } from 'antd';
+import { Avatar, Card, Col, Divider, Input, Row, Tag } from 'antd';
+import type { InputRef } from 'antd';
 import { createStyles } from 'antd-style';
-import Applications from '../components/Account/Applications';
-import Articles from '../components/Account/Center/Articles';
-import Projects from '../components/Account/Center/Projects';
 import { queryAccountCenterCurrent } from '../services/api';
+import type { CurrentUser, TagType } from '../types';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -198,7 +202,9 @@ const TagList: React.FC<{
 };
 const Center: React.FC = () => {
   const { styles } = useStyles();
-  const [tabKey, setTabKey] = useState<tabKeyType>('articles');
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  let tabActiveKey = pathname.split('/').pop() as string;
 
   //  获取用户信息
   const { data: currentUser } = Route.useLoaderData();
@@ -256,19 +262,6 @@ const Center: React.FC = () => {
     );
   };
 
-  // 渲染tab切换
-  const renderChildrenByTabKey = (tabValue: tabKeyType) => {
-    if (tabValue === 'projects') {
-      return <Projects />;
-    }
-    if (tabValue === 'applications') {
-      return <Applications />;
-    }
-    if (tabValue === 'articles') {
-      return <Articles />;
-    }
-    return null;
-  };
   return (
     <GridContent>
       <Row gutter={24}>
@@ -318,12 +311,25 @@ const Center: React.FC = () => {
             className={styles.tabsCard}
             bordered={false}
             tabList={operationTabList}
-            activeTabKey={tabKey}
+            activeTabKey={tabActiveKey}
             onTabChange={(_tabKey: string) => {
-              setTabKey(_tabKey as tabKeyType);
+              tabActiveKey = _tabKey;
+              switch (_tabKey) {
+                case 'articles':
+                  navigate({ to: '/account/center/articles' });
+                  break;
+                case 'applications':
+                  navigate({ to: '/account/center/applications' });
+                  break;
+                case 'projects':
+                  navigate({ to: '/account/center/projects' });
+                  break;
+                default:
+                  break;
+              }
             }}
           >
-            {renderChildrenByTabKey(tabKey)}
+            <Outlet />
           </Card>
         </Col>
       </Row>

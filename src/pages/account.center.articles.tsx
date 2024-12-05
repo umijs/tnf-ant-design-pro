@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import { LikeOutlined, MessageFilled, StarTwoTone } from '@ant-design/icons';
 import { List, Tag } from 'antd';
+import ArticleListContent from '@/components/Account/Center/ArticleListContent';
 import { queryFakeList } from '@/services/api';
-import type { ListItemDataType } from '@/types/account/center';
-import ArticleListContent from '../ArticleListContent';
-import useStyles from './index.style';
+import type { ListItemDataType } from '@/types';
+import useStyles from './account.center.articles.style';
 
 const Articles: React.FC = () => {
-  const { styles } = useStyles();
   const IconText: React.FC<{
     icon: React.ReactNode;
     text: React.ReactNode;
@@ -17,19 +16,8 @@ const Articles: React.FC = () => {
     </span>
   );
 
-  const [listData, setListData] = useState([]);
-
-  // 获取tab列表数据
-  const fetchData = async () => {
-    const { data: listData } = await queryFakeList({
-      count: 30,
-    });
-    setListData(listData);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { styles } = useStyles();
+  const { data } = Route.useLoaderData();
 
   return (
     <List<ListItemDataType>
@@ -37,7 +25,7 @@ const Articles: React.FC = () => {
       className={styles.articleList}
       rowKey="id"
       itemLayout="vertical"
-      dataSource={listData?.list || []}
+      dataSource={data?.list || []}
       renderItem={(item) => (
         <List.Item
           key={item.id}
@@ -71,4 +59,8 @@ const Articles: React.FC = () => {
     />
   );
 };
-export default Articles;
+
+export const Route = createFileRoute('/account/center/articles')({
+  component: Articles,
+  loader: () => queryFakeList({ count: 30 }),
+});

@@ -15,7 +15,7 @@ import type { TimeType } from '@/components/Dashboard/Analysis/SalesCard';
 import SalesCard from '@/components/Dashboard/Analysis/SalesCard';
 import TopSearch from '@/components/Dashboard/Analysis/TopSearch';
 import { fakeDashboardAnalysisChartData } from '@/services/api';
-import type { AnalysisData } from '@/types/dashboard/analysis';
+import type { AnalysisData } from '@/types';
 import { getTimeDistance } from '@/utils/dashboard/utils';
 import useStyles from './dashboard.analysis.style';
 

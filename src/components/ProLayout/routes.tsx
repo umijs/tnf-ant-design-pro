@@ -77,7 +77,7 @@ export default [
     name: '个人页',
     icon: 'user',
     routes: [
-      { name: '个人中心', path: '/account/center' },
+      { name: '个人中心', path: '/account/center/articles' },
       { name: '个人设置', path: '/account/settings' },
     ],
   },

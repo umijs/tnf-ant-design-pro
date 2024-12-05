@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import {
   DownloadOutlined,
   EditOutlined,
@@ -8,8 +8,8 @@ import {
 import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
 import numeral from 'numeral';
 import { queryAccountCenterFakeList } from '@/services/api';
-import type { ListItemDataType } from '@/types/account/center';
-import useStyles from './index.style';
+import type { ListItemDataType } from '@/types';
+import useStyles from './account.center.applications.style';
 
 export function formatWan(val: number) {
   const v = val * 1;
@@ -37,19 +37,7 @@ export function formatWan(val: number) {
 }
 const Applications: React.FC = () => {
   const { styles: stylesApplications } = useStyles();
-  const [listData, setListData] = useState([]);
-
-  // 获取tab列表数据
-  const fetchData = async () => {
-    const { data: listData } = await queryAccountCenterFakeList({
-      count: 30,
-    });
-    setListData(listData);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data } = Route.useLoaderData();
 
   const CardInfo: React.FC<{
     activeUser: React.ReactNode;
@@ -79,7 +67,7 @@ const Applications: React.FC = () => {
         sm: 2,
         xs: 1,
       }}
-      dataSource={listData?.list || []}
+      dataSource={data?.list || []}
       renderItem={(item) => (
         <List.Item key={item.id}>
           <Card
@@ -130,4 +118,8 @@ const Applications: React.FC = () => {
     />
   );
 };
-export default Applications;
+
+export const Route = createFileRoute('/account/center/applications')({
+  component: Applications,
+  loader: () => queryAccountCenterFakeList({ count: 30 }),
+});

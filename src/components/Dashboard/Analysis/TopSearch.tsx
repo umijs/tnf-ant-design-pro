@@ -4,7 +4,7 @@ import { Area } from '@ant-design/plots';
 import { Card, Col, Row, Table, Tooltip } from 'antd';
 import numeral from 'numeral';
 import useStyles from '@/pages/dashboard.analysis.style';
-import type { DataItem } from '@/types/dashboard/analysis';
+import type { DataItem } from '@/types';
 import NumberInfo from './NumberInfo';
 import Trend from './Trend';
 
