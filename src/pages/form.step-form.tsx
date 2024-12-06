@@ -21,10 +21,13 @@ import {
 import type { StepDataType } from '@/types';
 import useStyles from './form.step-form.style';
 
-const StepDescriptions: React.FC<{
+function StepDescriptions({
+  stepData,
+  bordered,
+}: {
   stepData: StepDataType;
   bordered?: boolean;
-}> = ({ stepData, bordered }) => {
+}) {
   const { payAccount, receiverAccount, receiverName, amount } = stepData;
   return (
     <Descriptions column={1} bordered={bordered}>
@@ -48,11 +51,15 @@ const StepDescriptions: React.FC<{
       </Descriptions.Item>
     </Descriptions>
   );
-};
-const StepResult: React.FC<{
+}
+
+function StepResult({
+  onFinish,
+  children,
+}: {
   onFinish: () => Promise<void>;
   children?: React.ReactNode;
-}> = (props) => {
+}) {
   const { styles } = useStyles();
   return (
     <Result
@@ -61,7 +68,7 @@ const StepResult: React.FC<{
       subTitle="预计两小时内到账"
       extra={
         <>
-          <Button type="primary" onClick={props.onFinish}>
+          <Button type="primary" onClick={onFinish}>
             再转一笔
           </Button>
           <Button>查看账单</Button>
@@ -69,11 +76,12 @@ const StepResult: React.FC<{
       }
       className={styles.result}
     >
-      {props.children}
+      {children}
     </Result>
   );
-};
-const StepForm: React.FC<Record<string, any>> = () => {
+}
+
+function StepForm() {
   const { styles } = useStyles();
   const [stepData, setStepData] = useState<StepDataType>({
     payAccount: 'ant-design@alipay.com',
@@ -245,7 +253,7 @@ const StepForm: React.FC<Record<string, any>> = () => {
       </Card>
     </PageContainer>
   );
-};
+}
 
 export const Route = createFileRoute('/form/step-form')({
   component: StepForm,

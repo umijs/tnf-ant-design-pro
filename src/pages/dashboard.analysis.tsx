@@ -1,34 +1,28 @@
-import type { FC } from 'react';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
 import { Col, Dropdown, Row } from 'antd';
-import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
+import type { PickerProps } from 'antd/es/date-picker/generatePicker';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import type dayjs from 'dayjs';
 import IntroduceRow from '@/components/Dashboard/Analysis/IntroduceRow';
 import OfflineData from '@/components/Dashboard/Analysis/OfflineData';
-import PageLoading from '@/components/Dashboard/Analysis/PageLoading';
 import ProportionSales from '@/components/Dashboard/Analysis/ProportionSales';
 import type { TimeType } from '@/components/Dashboard/Analysis/SalesCard';
 import SalesCard from '@/components/Dashboard/Analysis/SalesCard';
 import TopSearch from '@/components/Dashboard/Analysis/TopSearch';
 import { fakeDashboardAnalysisChartData } from '@/services/api';
-import type { AnalysisData } from '@/types';
 import { getTimeDistance } from '@/utils/dashboard/utils';
 import useStyles from './dashboard.analysis.style';
 
-type RangePickerValue = RangePickerProps<dayjs.Dayjs>['value'];
-type AnalysisProps = {
-  dashboardAndanalysis: AnalysisData;
-  loading: boolean;
-};
+type RangePickerValue = PickerProps<dayjs.Dayjs>['value'];
 type SalesType = 'all' | 'online' | 'stores';
-const Analysis: FC<AnalysisProps> = () => {
+
+function Analysis() {
   const { styles } = useStyles();
   const [salesType, setSalesType] = useState<SalesType>('all');
-  const [currentTabKey, setCurrentTabKey] = useState<string>('');
+  const [currentTabKey, setCurrentTabKey] = useState('');
   const [rangePickerValue, setRangePickerValue] = useState<RangePickerValue>(
     getTimeDistance('year'),
   );
@@ -103,19 +97,16 @@ const Analysis: FC<AnalysisProps> = () => {
   return (
     <GridContent>
       <>
-        <Suspense fallback={<PageLoading />}>
-          <IntroduceRow visitData={data?.visitData || []} />
-        </Suspense>
+        <IntroduceRow loading={false} visitData={data?.visitData || []} />
 
-        <Suspense fallback={null}>
-          <SalesCard
-            rangePickerValue={rangePickerValue}
-            salesData={data?.salesData || []}
-            isActive={isActive}
-            handleRangePickerChange={handleRangePickerChange}
-            selectDate={selectDate}
-          />
-        </Suspense>
+        <SalesCard
+          loading={false}
+          rangePickerValue={rangePickerValue}
+          salesData={data?.salesData || []}
+          isActive={isActive}
+          handleRangePickerChange={handleRangePickerChange}
+          selectDate={selectDate}
+        />
 
         <Row
           gutter={24}
@@ -124,39 +115,36 @@ const Analysis: FC<AnalysisProps> = () => {
           }}
         >
           <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Suspense fallback={null}>
-              <TopSearch
-                visitData2={data?.visitData2 || []}
-                searchData={data?.searchData || []}
-                dropdownGroup={dropdownGroup}
-              />
-            </Suspense>
+            <TopSearch
+              loading={false}
+              visitData2={data?.visitData2 || []}
+              searchData={data?.searchData || []}
+              dropdownGroup={dropdownGroup}
+            />
           </Col>
           <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Suspense fallback={null}>
-              <ProportionSales
-                dropdownGroup={dropdownGroup}
-                salesType={salesType}
-                salesPieData={salesPieData || []}
-                handleChangeSalesType={handleChangeSalesType}
-              />
-            </Suspense>
+            <ProportionSales
+              loading={false}
+              dropdownGroup={dropdownGroup}
+              salesType={salesType}
+              salesPieData={salesPieData || []}
+              handleChangeSalesType={handleChangeSalesType}
+            />
           </Col>
         </Row>
 
-        <Suspense fallback={null}>
-          <OfflineData
-            activeKey={activeKey}
-            offlineData={data?.offlineData || []}
-            offlineChartData={data?.offlineChartData || []}
-            handleTabChange={handleTabChange}
-          />
-        </Suspense>
+        <OfflineData
+          loading={false}
+          activeKey={activeKey}
+          offlineData={data?.offlineData || []}
+          offlineChartData={data?.offlineChartData || []}
+          handleTabChange={handleTabChange}
+        />
       </>
     </GridContent>
   );
-};
-export default Analysis;
+}
+
 export const Route = createFileRoute('/dashboard/analysis')({
   component: Analysis,
   loader: fakeDashboardAnalysisChartData,

@@ -12,7 +12,7 @@ import useStyles from './dashboard.monitor.style';
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
-const Monitor: React.FC = () => {
+function Monitor() {
   const { styles } = useStyles();
 
   const { data } = Route.useLoaderData();
@@ -195,7 +195,8 @@ const Monitor: React.FC = () => {
       </>
     </GridContent>
   );
-};
+}
+
 export const Route = createFileRoute('/dashboard/monitor')({
   component: Monitor,
   loader: queryTags,
