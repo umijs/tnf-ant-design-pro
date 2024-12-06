@@ -71,12 +71,8 @@ export default (props: any) => {
     actionsRender: () => [<Question key="doc" />],
     footerRender: () => <Footer />,
     onPageChange: () => {
-      console.log(
-        'onPageChangeonPageChangeonPageChangeonPageChangeonPageChange',
-      );
       // FIXME: userInfo
       const userInfo = localStorage.getItem('tnf-ant-design-pro');
-      console.log(userInfo);
       // 如果没有登录，重定向到 login
       if (!userInfo && !isLoginPath(location.pathname)) {
         navigate({ to: loginPath });

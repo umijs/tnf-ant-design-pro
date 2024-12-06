@@ -157,15 +157,15 @@ const Workplace: FC = () => {
             title="进行中的项目"
             bordered={false}
             extra={<Link to="/">全部项目</Link>}
-            bodyStyle={{
-              padding: 0,
+            styles={{
+              body: { padding: 0 },
             }}
           >
             {projectNotice.map((item) => (
               <Card.Grid className={styles.projectGrid} key={item.id}>
                 <Card
-                  bodyStyle={{
-                    padding: 0,
+                  styles={{
+                    body: { padding: 0 },
                   }}
                   bordered={false}
                 >
@@ -191,8 +191,8 @@ const Workplace: FC = () => {
             ))}
           </Card>
           <Card
-            bodyStyle={{
-              padding: 0,
+            styles={{
+              body: { padding: 0 },
             }}
             bordered={false}
             className={styles.activeCard}
@@ -213,8 +213,8 @@ const Workplace: FC = () => {
             }}
             title="快速开始 / 便捷导航"
             bordered={false}
-            bodyStyle={{
-              padding: 0,
+            styles={{
+              body: { padding: 0 },
             }}
           >
             <EditableLinkGroup
@@ -259,9 +259,8 @@ const Workplace: FC = () => {
             </div>
           </Card>
           <Card
-            bodyStyle={{
-              paddingTop: 12,
-              paddingBottom: 12,
+            styles={{
+              body: { paddingTop: 12, paddingBottom: 12 },
             }}
             bordered={false}
             title="团队"

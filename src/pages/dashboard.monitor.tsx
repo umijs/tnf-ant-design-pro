@@ -84,8 +84,8 @@ function Monitor() {
               style={{
                 marginBottom: 24,
               }}
-              bodyStyle={{
-                textAlign: 'center',
+              styles={{
+                body: { textAlign: 'center' },
               }}
               bordered={false}
             >
@@ -158,8 +158,8 @@ function Monitor() {
             <Card
               title="热门搜索"
               bordered={false}
-              bodyStyle={{
-                overflow: 'hidden',
+              styles={{
+                body: { overflow: 'hidden' },
               }}
             >
               <WordCloud
@@ -182,9 +182,8 @@ function Monitor() {
           >
             <Card
               title="资源剩余"
-              bodyStyle={{
-                textAlign: 'center',
-                fontSize: 0,
+              styles={{
+                body: { textAlign: 'center', fontSize: 0 },
               }}
               bordered={false}
             >

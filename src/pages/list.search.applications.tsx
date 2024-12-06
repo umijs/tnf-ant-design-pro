@@ -174,8 +174,8 @@ export const Applications: FC<Record<string, any>> = () => {
           <List.Item key={item.id}>
             <Card
               hoverable
-              bodyStyle={{
-                paddingBottom: 20,
+              styles={{
+                body: { paddingBottom: 20 },
               }}
               actions={[
                 <Tooltip key="download" title="下载">

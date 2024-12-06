@@ -160,7 +160,9 @@ const Articles: FC = () => {
       <Card
         style={{ marginTop: 24 }}
         bordered={false}
-        bodyStyle={{ padding: '8px 32px 32px 32px' }}
+        styles={{
+          body: { padding: '8px 32px 32px 32px' },
+        }}
       >
         <List<ListItemDataType>
           size="large"

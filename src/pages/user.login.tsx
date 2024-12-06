@@ -100,7 +100,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const fetchUserInfo = async (values: API.LoginParams) => {
-    console.log(values);
     // FIXME: currentUser
     localStorage.setItem(
       'tnf-ant-design-pro',

@@ -41,8 +41,8 @@ const SalesCard = ({
     <Card
       loading={loading}
       bordered={false}
-      bodyStyle={{
-        padding: 0,
+      styles={{
+        body: { padding: '0' },
       }}
     >
       <div className={styles.salesCard}>
