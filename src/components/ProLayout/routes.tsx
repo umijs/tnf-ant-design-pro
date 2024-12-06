@@ -4,7 +4,7 @@ export default [
   //   layout: false,
   //   routes: [{ name: '登录', path: '/user/login' }],
   // },
-  { path: '/', name: '欢迎', icon: 'smile' },
+  // { path: '/', name: '欢迎', icon: 'smile' },
   {
     path: '/dashboard',
     name: 'Dashboard',

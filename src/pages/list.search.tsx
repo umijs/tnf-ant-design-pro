@@ -1,9 +1,8 @@
-import React from 'react';
 import {
+  Link,
   Outlet,
   createFileRoute,
-  useLocation,
-  useNavigate,
+  useLocation
 } from '@umijs/tnf/router';
 import { PageContainer } from '@ant-design/pro-components';
 import { Input } from 'antd';
@@ -11,15 +10,15 @@ import { Input } from 'antd';
 const tabList = [
   {
     key: 'articles',
-    tab: '文章',
+    tab: <Link to="/list/search/articles">文章</Link>,
   },
   {
     key: 'projects',
-    tab: '项目',
+    tab: <Link to="/list/search/projects">项目</Link>,
   },
   {
     key: 'applications',
-    tab: '应用',
+    tab: <Link to="/list/search/applications">应用</Link>,
   },
 ];
 
@@ -27,23 +26,6 @@ export const Route = createFileRoute('/list/search')({
   component: () => {
     const { pathname } = useLocation();
     let tabActiveKey = pathname.split('/').pop() as string;
-    const navigate = useNavigate();
-    const handleTabChange = (key: string) => {
-      tabActiveKey = key;
-      switch (key) {
-        case 'articles':
-          navigate({ to: '/list/search/articles/' });
-          break;
-        case 'applications':
-          navigate({ to: '/list/search/applications/' });
-          break;
-        case 'projects':
-          navigate({ to: '/list/search/projects/' });
-          break;
-        default:
-          break;
-      }
-    };
     const handleFormSubmit = (value: string) => {};
 
     return (
@@ -61,7 +43,6 @@ export const Route = createFileRoute('/list/search')({
         }
         tabList={tabList}
         tabActiveKey={tabActiveKey}
-        onTabChange={handleTabChange}
       >
         <Outlet />
       </PageContainer>
