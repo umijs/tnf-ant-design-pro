@@ -17,8 +17,8 @@ import {
 import { Alert, App, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import { Footer } from '@/components';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { login } from '@/services/api';
+import { getFakeCaptcha } from '@/services/login';
 
 // import Settings from '../../../../config/defaultSettings';
 

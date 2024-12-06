@@ -8,7 +8,18 @@ export function createApp() {
     routeTree,
     defaultPreload: 'intent',
     defaultPreloadDelay: 50,
-    defaultPendingComponent: () => <Spin />,
+    defaultPendingComponent: () => (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <Spin />
+      </div>
+    ),
     defaultPendingMs: 0,
     defaultGcTime: 1000 * 60 * 5,
     defaultStaleTime: 1000 * 60 * 2,

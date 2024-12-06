@@ -2257,9 +2257,9 @@ const data = {
 
 module.exports = {
   'GET /api/get_list': async (req, res) => {
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
-    );
     res.json(data);
+  },
+  'POST /api/post_fake_list': async (req, res) => {
+    res.json({ success: true });
   },
 };

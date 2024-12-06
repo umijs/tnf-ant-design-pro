@@ -3,7 +3,7 @@ import { Area, Column } from '@ant-design/plots';
 import { Col, Progress, Row, Tooltip } from 'antd';
 import numeral from 'numeral';
 import useStyles from '@/pages/dashboard.analysis.style';
-import type { DataItem } from '@/types/dashboard/analysis';
+import type { DataItem } from '@/types';
 import Yuan from '@/utils/dashboard/Yuan';
 import { ChartCard, Field } from './Charts';
 import Trend from './Trend';

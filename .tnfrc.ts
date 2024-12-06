@@ -5,4 +5,7 @@ export default {
       routeFileIgnorePattern: '.style.ts',
     },
   },
+  mock: {
+    delay: '500-1000',
+  },
 };

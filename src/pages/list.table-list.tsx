@@ -26,12 +26,7 @@ import { Button, Drawer, Input, message } from 'antd';
 import { z } from 'zod';
 import type { FormValueType } from '../components/UpdateForm';
 import UpdateForm from '../components/UpdateForm';
-import {
-  addRule,
-  removeRule,
-  rule,
-  updateRule,
-} from '../services/ant-design-pro/api';
+import { addRule, removeRule, rule, updateRule } from '../services/api';
 
 const PAGE_SIZE = 5;
 
@@ -382,13 +377,7 @@ const TableList: React.FC = () => {
 
 export const Route = createFileRoute('/list/table-list')({
   component: TableList,
-  loader: async ({ deps }) => {
-    // delay 随机 500ms - 1000ms
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
-    );
-    return await rule(deps);
-  },
+  loader: ({ deps }) => rule(deps),
   validateSearch: z.object({
     current: z.number().optional(),
     pageSize: z.number().optional(),
@@ -409,5 +398,4 @@ export const Route = createFileRoute('/list/table-list')({
     status,
     updatedAt,
   }),
-  pendingComponent: () => null,
 });

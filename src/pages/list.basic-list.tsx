@@ -22,7 +22,7 @@ import {
   queryBasicList,
   removeFakeList,
   updateFakeList,
-} from '@/services/ant-design-pro/api';
+} from '@/services/api';
 import type { BasicListItemDataType } from '@/types';
 import useStyles from './list.basic-list.style';
 
@@ -248,5 +248,5 @@ export const BasicList: FC = () => {
 
 export const Route = createFileRoute('/list/basic-list')({
   component: BasicList,
-  loader: async () => await queryBasicList({ count: 50 }),
+  loader: () => queryBasicList({ count: 50 }),
 });

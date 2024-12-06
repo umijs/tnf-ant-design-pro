@@ -6,7 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import AvatarList from '@/components/AvatarList';
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
-import { queryFakeList } from '@/services/ant-design-pro/api';
+import { queryFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types';
 import useStyles from './list.search.projects.style';
 
@@ -125,5 +125,5 @@ const Projects: FC = () => {
 
 export const Route = createFileRoute('/list/search/projects')({
   component: Projects,
-  loader: async () => await queryFakeList({ count: 8 }),
+  loader: () => queryFakeList({ count: 8 }),
 });

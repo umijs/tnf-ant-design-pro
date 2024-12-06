@@ -10,8 +10,8 @@ import {
   fakeChartData,
   queryActivities,
   queryProjectNotice,
-} from '@/services/ant-design-pro/dashboard/workplace';
-import type { ActivitiesType, CurrentUser } from '@/types/dashboard/workplace';
+} from '@/services/api';
+import type { ActivitiesType, CurrentUser } from '@/types';
 import useStyles from './dashboard.workplace.style';
 
 dayjs.extend(relativeTime);

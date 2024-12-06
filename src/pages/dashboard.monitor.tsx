@@ -6,7 +6,7 @@ import { Card, Col, Progress, Row, Statistic } from 'antd';
 import numeral from 'numeral';
 import ActiveChart from '@/components/Dashboard/Monitor/ActiveChart';
 import Map from '@/components/Dashboard/Monitor/Map';
-import { queryTags } from '@/services/ant-design-pro/dashboard/monitor';
+import { queryTags } from '@/services/api';
 import useStyles from './dashboard.monitor.style';
 
 const { Countdown } = Statistic;
@@ -198,7 +198,5 @@ const Monitor: React.FC = () => {
 };
 export const Route = createFileRoute('/dashboard/monitor')({
   component: Monitor,
-  loader: async (params) => {
-    return await queryTags();
-  },
+  loader: queryTags,
 });

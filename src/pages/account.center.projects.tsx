@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { createFileRoute } from '@umijs/tnf/router';
 import { Card, List } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { queryFakeList } from '@/services/ant-design-pro/account/center';
-import type { ListItemDataType } from '@/types/account/center';
-import AvatarList from '../AvatarList';
-import useStyles from './index.style';
+import AvatarList from '@/components/Account/Center/AvatarList';
+import { queryFakeList } from '@/services/api';
+import type { ListItemDataType } from '@/types';
+import useStyles from './account.center.projects.style';
 
 dayjs.extend(relativeTime);
+
 const Projects: React.FC = () => {
   const { styles } = useStyles();
-  const [listData, setListData] = useState([]);
-
-  // 获取tab列表数据
-  const fetchData = async () => {
-    const { data: listData } = await queryFakeList({
-      count: 30,
-    });
-    setListData(listData);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data } = Route.useLoaderData();
   return (
     <List<ListItemDataType>
       className={styles.coverCardList}
@@ -36,7 +25,7 @@ const Projects: React.FC = () => {
         sm: 2,
         xs: 1,
       }}
-      dataSource={listData?.list || []}
+      dataSource={data?.list || []}
       renderItem={(item) => (
         <List.Item>
           <Card
@@ -68,4 +57,8 @@ const Projects: React.FC = () => {
     />
   );
 };
-export default Projects;
+
+export const Route = createFileRoute('/account/center/projects')({
+  component: Projects,
+  loader: () => queryFakeList({ count: 30 }),
+});

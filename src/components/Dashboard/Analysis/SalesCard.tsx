@@ -4,7 +4,7 @@ import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import type dayjs from 'dayjs';
 import numeral from 'numeral';
 import useStyles from '@/pages/dashboard.analysis.style';
-import type { DataItem } from '@/types/dashboard/analysis';
+import type { DataItem } from '@/types';
 
 export type TimeType = 'today' | 'week' | 'month' | 'year';
 const { RangePicker } = DatePicker;

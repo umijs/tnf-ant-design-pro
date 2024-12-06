@@ -367,9 +367,6 @@ const data = {
 
 module.exports = {
   'GET /api/card_fake_list': async (req, res) => {
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.floor(Math.random() * 500) + 500),
-    );
     res.json(data);
   },
 };

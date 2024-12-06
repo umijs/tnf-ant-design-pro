@@ -14,7 +14,7 @@ import {
   ProFormTimePicker,
 } from '@ant-design/pro-components';
 import { Card, Col, Popover, Row, message } from 'antd';
-import { fakeSubmitForm } from '@/services/ant-design-pro/form/advanced-form';
+import { fakeFormAdvancedSubmitForm } from '@/services/api';
 import useStyles from './form.advanced-form.style';
 
 interface TableFormDateType {
@@ -124,7 +124,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
   const onFinish = async (values: Record<string, any>) => {
     setError([]);
     try {
-      await fakeSubmitForm(values);
+      await fakeFormAdvancedSubmitForm(values);
       message.success('提交成功');
     } catch {
       // console.log
