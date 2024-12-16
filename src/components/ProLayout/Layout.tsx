@@ -3,7 +3,6 @@ import { Link, Outlet, useLocation, useNavigate } from '@umijs/tnf/router';
 import { LogoutOutlined } from '@ant-design/icons';
 import { ProLayout } from '@ant-design/pro-components';
 import { Dropdown } from 'antd';
-import { stringify } from 'querystring';
 import { Footer, Question } from '../';
 import { outLogin } from '../../services/api';
 import Exception from './Exception';
@@ -114,9 +113,9 @@ export default (props: any) => {
       navigate({
         replace: true,
         to: '/user/login',
-        search: stringify({
+        search: new URLSearchParams({
           redirect: pathname + search,
-        }),
+        }).toString(),
       });
     }
   };

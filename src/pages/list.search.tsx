@@ -20,7 +20,7 @@ const tabList = [
 export const Route = createFileRoute('/list/search')({
   component: () => {
     const { pathname } = useLocation();
-    let tabActiveKey = pathname.split('/').pop() as string;
+    const tabActiveKey = pathname.split('/').pop() as string;
 
     return (
       <PageContainer

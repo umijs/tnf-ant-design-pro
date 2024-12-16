@@ -199,7 +199,9 @@ const TableList: React.FC = () => {
   ];
 
   useEffect(() => {
-    formRef?.current.setFieldsValue(search);
+    if (formRef.current) {
+      formRef.current.setFieldsValue(search);
+    }
   }, [formRef, search]);
 
   return (

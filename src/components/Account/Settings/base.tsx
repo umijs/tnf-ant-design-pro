@@ -76,7 +76,7 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
           }}
           initialValues={{
             ...currentUser,
-            phone: currentUser?.phone.split('-'),
+            phone: (currentUser?.phone || '').split('-'),
           }}
           hideRequiredMark
         >
