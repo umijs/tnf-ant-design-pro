@@ -91,7 +91,7 @@ export const Applications: FC<Record<string, any>> = () => {
   return (
     <div className={styles.filterCardList}>
       <Card bordered={false}>
-        <Form onValuesChange={(_, values) => {}}>
+        <Form>
           <StandardFormRow
             title="所属类目"
             block

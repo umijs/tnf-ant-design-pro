@@ -44,7 +44,6 @@ export const Route = createFileRoute('/list/search')({
           break;
       }
     };
-    const handleFormSubmit = (value: string) => {};
 
     return (
       <PageContainer
@@ -54,7 +53,6 @@ export const Route = createFileRoute('/list/search')({
               placeholder="请输入"
               enterButton="搜索"
               size="large"
-              onSearch={handleFormSubmit}
               style={{ maxWidth: 522, width: '100%' }}
             />
           </div>
