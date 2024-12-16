@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Link,
-  createFileRoute,
-  useLoaderData,
-  useNavigate,
-  useRouterState,
-} from '@umijs/tnf/router';
+import { Link, createFileRoute } from '@umijs/tnf/router';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
@@ -26,60 +20,78 @@ import { Button, Drawer, Input, message } from 'antd';
 import { z } from 'zod';
 import type { FormValueType } from '../components/UpdateForm';
 import UpdateForm from '../components/UpdateForm';
+import useRules from '../hooks/useRules';
 import { addRule, removeRule, rule, updateRule } from '../services/api';
 
 const PAGE_SIZE = 5;
 
-const handleAdd = async (fields: API.RuleListItem) => {
-  const hide = message.loading('正在添加');
+const handleAction = async (
+  action: () => Promise<void>,
+  loadingMessage: string,
+  successMessage: string,
+  errorMessage: string,
+) => {
+  const hide = message.loading(loadingMessage);
   try {
-    await addRule({
-      ...fields,
-    });
+    await action();
     hide();
-    message.success('Added successfully');
+    message.success(successMessage);
     return true;
-  } catch (error) {
+  } catch {
     hide();
-    message.error('Adding failed, please try again!');
+    message.error(errorMessage);
     return false;
   }
+};
+
+const handleAdd = async (fields: API.RuleListItem) => {
+  return handleAction(
+    async () => {
+      await addRule({ ...fields });
+    },
+    '正在添加',
+    'Added successfully',
+    'Adding failed, please try again!',
+  );
 };
 
 const handleUpdate = async (fields: FormValueType) => {
-  const hide = message.loading('Configuring');
-  try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
-    });
-    hide();
-    message.success('Configuration is successful');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Configuration failed, please try again!');
-    return false;
-  }
+  return handleAction(
+    async () => {
+      await updateRule({
+        name: fields.name,
+        desc: fields.desc,
+        key: fields.key,
+      });
+    },
+    'Configuring',
+    'Configuration is successful',
+    'Configuration failed, please try again!',
+  );
 };
 
 const handleRemove = async (selectedRows: API.RuleListItem[]) => {
-  const hide = message.loading('正在删除');
   if (!selectedRows) return true;
-  try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
-    hide();
-    message.success('Deleted successfully and will refresh soon');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Delete failed, please try again');
-    return false;
-  }
+  return handleAction(
+    async () => {
+      await removeRule({ key: selectedRows.map((row) => row.key) });
+    },
+    '正在删除',
+    'Deleted successfully and will refresh soon',
+    'Delete failed, please try again',
+  );
 };
+
+const searchSchema = z.object({
+  current: z.number().optional(),
+  pageSize: z.number().optional(),
+  name: z.string().optional(),
+  desc: z.string().optional(),
+  callNo: z.string().optional(),
+  status: z.enum(['0', '1', '2', '3']).optional(),
+  updatedAt: z.string().optional(),
+});
+type SearchParams = z.infer<typeof searchSchema>;
 
 const TableList: React.FC = () => {
   const [createModalOpen, handleModalOpen] = useState<boolean>(false);
@@ -90,22 +102,29 @@ const TableList: React.FC = () => {
   const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
   const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
 
+  const { data, total, search, navigate } = useRules();
+
+  const handleNavigate = (params: SearchParams) => {
+    navigate({
+      to: '/list/table-list',
+      search: { ...search, ...params },
+    });
+  };
+
   const columns: ProColumns<API.RuleListItem>[] = [
     {
       title: '规则名称',
       dataIndex: 'name',
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      render: (dom, entity) => (
+        <a
+          onClick={() => {
+            setCurrentRow(entity);
+            setShowDetail(true);
+          }}
+        >
+          {dom}
+        </a>
+      ),
     },
     {
       title: '描述',
@@ -179,12 +198,6 @@ const TableList: React.FC = () => {
     },
   ];
 
-  const { data, total } = Route.useLoaderData();
-  // const { data, total } = useLoaderData({ from: '/list/table-list' });
-  const search = Route.useSearch();
-  const navigate = useNavigate();
-  const loading = useRouterState({ select: (s) => s.isLoading });
-
   useEffect(() => {
     formRef?.current.setFieldsValue(search);
   }, [formRef, search]);
@@ -210,7 +223,6 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        loading={loading}
         dataSource={data}
         columns={columns}
         rowSelection={{
@@ -222,16 +234,8 @@ const TableList: React.FC = () => {
           total,
           current: search.current || 1,
           pageSize: search.pageSize || PAGE_SIZE,
-          onChange: (current, size) => {
-            navigate({
-              to: '/list/table-list',
-              search: {
-                ...search,
-                current,
-                pageSize: size,
-              },
-            });
-          },
+          onChange: (current, size) =>
+            handleNavigate({ current, pageSize: size }),
           itemRender: (page, type, originalElement) => {
             if (type === 'page') {
               return (
@@ -249,21 +253,8 @@ const TableList: React.FC = () => {
             return originalElement;
           },
         }}
-        onSubmit={(params) => {
-          navigate({
-            to: '/list/table-list',
-            search: {
-              ...search,
-              ...params,
-            },
-          });
-        }}
-        onReset={() => {
-          navigate({
-            to: '/list/table-list',
-            search: { current: 1, pageSize: PAGE_SIZE },
-          });
-        }}
+        onSubmit={handleNavigate}
+        onReset={() => handleNavigate({ current: 1, pageSize: PAGE_SIZE })}
       />
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
@@ -378,15 +369,7 @@ const TableList: React.FC = () => {
 export const Route = createFileRoute('/list/table-list')({
   component: TableList,
   loader: ({ deps }) => rule(deps),
-  validateSearch: z.object({
-    current: z.number().optional(),
-    pageSize: z.number().optional(),
-    name: z.string().optional(),
-    desc: z.string().optional(),
-    callNo: z.string().optional(),
-    status: z.enum(['0', '1', '2', '3']).optional(),
-    updatedAt: z.string().optional(),
-  }),
+  validateSearch: searchSchema,
   loaderDeps: ({
     search: { current, pageSize, name, desc, callNo, status, updatedAt },
   }) => ({

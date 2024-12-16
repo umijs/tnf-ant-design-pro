@@ -17,7 +17,6 @@ const categoryOptions = Array.from({ length: 12 }).map((_, index) => ({
   label: `类目${index + 1}`,
 }));
 
-const FormItem = Form.Item;
 const { Paragraph } = Typography;
 const getKey = (id: string, index: number) => `${id}-${index}`;
 const Projects: FC = () => {
@@ -76,26 +75,10 @@ const Projects: FC = () => {
       )}
     />
   );
-  const formItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
-  };
   return (
     <div className={styles.coverCardList}>
       <Card bordered={false}>
-        <Form
-          layout="inline"
-          onValuesChange={(_, values) => {
-            // 表单项变化时请求数据
-            // 模拟查询表单生效
-          }}
-        >
+        <Form layout="inline">
           <StandardFormRow
             title="所属类目"
             block
