@@ -1,7 +1,7 @@
 import { Line, Tiny } from '@ant-design/plots';
 import { Card, Col, Row, Tabs } from 'antd';
 import useStyles from '@/pages/dashboard.analysis.style';
-import type { DataItem, OfflineDataType } from '@/types';
+import type { OfflineDataType } from '@/types';
 import NumberInfo from './NumberInfo';
 
 const CustomTab = ({
@@ -53,7 +53,7 @@ const OfflineData = ({
   activeKey: string;
   loading: boolean;
   offlineData: OfflineDataType[];
-  offlineChartData: DataItem[];
+  offlineChartData: any[];
   handleTabChange: (activeKey: string) => void;
 }) => {
   const { styles } = useStyles();

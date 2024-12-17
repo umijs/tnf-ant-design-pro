@@ -81,7 +81,7 @@ function StepResult({
   );
 }
 
-function StepForm() {
+const StepForm: React.FC = () => {
   const { styles } = useStyles();
   const [stepData, setStepData] = useState<StepDataType>({
     payAccount: 'ant-design@alipay.com',
@@ -253,7 +253,7 @@ function StepForm() {
       </Card>
     </PageContainer>
   );
-}
+};
 
 export const Route = createFileRoute('/form/step-form')({
   component: StepForm,

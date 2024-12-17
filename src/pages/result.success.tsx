@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link, createFileRoute } from '@umijs/tnf/router';
 import { DingdingOutlined } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';

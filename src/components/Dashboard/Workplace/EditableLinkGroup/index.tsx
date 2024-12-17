@@ -35,9 +35,5 @@ const EditableLinkGroup: React.FC<EditableLinkGroupProps> = (props) => {
     </div>
   );
 };
-EditableLinkGroup.defaultProps = {
-  links: [],
-  onAdd: () => {},
-  linkElement: 'a',
-};
+
 export default EditableLinkGroup;

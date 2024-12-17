@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React, { useMemo } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Button, Card, Form, List, Select, Tag } from 'antd';
+import { Card, Form, List, Select, Tag } from 'antd';
 import type { DefaultOptionType } from 'antd/es/select';
 import ArticleListContent from '@/components/ArticleListContent';
 import StandardFormRow from '@/components/StandardFormRow';
@@ -88,25 +88,6 @@ const Articles: FC = () => {
         return null;
     }
   };
-
-  const formItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
-  };
-  const loadMoreDom = list.length > 0 && (
-    <div style={{ textAlign: 'center', marginTop: 16 }}>
-      <Button
-        onClick={() => {}}
-        style={{ paddingLeft: 48, paddingRight: 48 }}
-      ></Button>
-    </div>
-  );
 
   const ownerOptions = useMemo<DefaultOptionType[]>(
     () =>

@@ -73,7 +73,7 @@ const ChartCard: React.FC<ChartCardProps> = (props) => {
               height: contentHeight || 'auto',
             }}
           >
-            <div className={contentHeight && styles.contentFixed}>
+            <div className={contentHeight ? styles.contentFixed : undefined}>
               {children}
             </div>
           </div>

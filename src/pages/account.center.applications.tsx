@@ -5,7 +5,7 @@ import {
   EllipsisOutlined,
   ShareAltOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
+import { Avatar, Card, Dropdown, List, type MenuProps, Tooltip } from 'antd';
 import numeral from 'numeral';
 import { queryAccountCenterFakeList } from '@/services/api';
 import type { ListItemDataType } from '@/types';
@@ -54,6 +54,16 @@ const Applications: React.FC = () => {
       </div>
     </div>
   );
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: '1st menu item',
+    },
+    {
+      key: '2',
+      label: '2nd menu item',
+    },
+  ];
   return (
     <List<ListItemDataType>
       rowKey="id"
@@ -85,19 +95,7 @@ const Applications: React.FC = () => {
               <Tooltip title="分享" key="share">
                 <ShareAltOutlined />
               </Tooltip>,
-              <Dropdown
-                items={[
-                  {
-                    key: '1',
-                    title: '1st menu item',
-                  },
-                  {
-                    key: '2',
-                    title: '2nd menu item',
-                  },
-                ]}
-                key="ellipsis"
-              >
+              <Dropdown menu={{ items }} key="ellipsis">
                 <EllipsisOutlined />
               </Dropdown>,
             ]}

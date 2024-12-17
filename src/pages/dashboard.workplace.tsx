@@ -76,7 +76,7 @@ const PageHeaderContent: FC<{
     </div>
   );
 };
-const ExtraContent: FC<Record<string, any>> = () => {
+const ExtraContent: FC = () => {
   const { styles } = useStyles();
   return (
     <div className={styles.extraContent}>
@@ -289,7 +289,7 @@ const Workplace: FC = () => {
 };
 export const Route = createFileRoute('/dashboard/workplace')({
   component: Workplace,
-  loader: async (params) => {
+  loader: async () => {
     const { data: projectNotice = [] } = await queryProjectNotice();
     const { data: activities = [] } = await queryActivities();
     const { data } = await fakeChartData();

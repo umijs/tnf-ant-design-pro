@@ -1,4 +1,4 @@
-import { DataItem } from '@antv/g2plot/esm/interface/config';
+import type { RangePickerProps } from 'antd/es/date-picker';
 
 export type BasicGood = {
   id: string;
@@ -174,8 +174,14 @@ export type GeographicItemType = {
 };
 
 export type GeographicType = {
-  province: GeographicItemType;
-  city: GeographicItemType;
+  province: {
+    label: string;
+    key: string;
+  };
+  city: {
+    label: string;
+    key: string;
+  };
 };
 
 export interface VisitDataType {
@@ -204,15 +210,15 @@ export type RadarData = {
 };
 
 export interface AnalysisData {
-  visitData: DataItem[];
-  visitData2: DataItem[];
-  salesData: DataItem[];
-  searchData: DataItem[];
+  visitData: any[];
+  visitData2: any[];
+  salesData: any[];
+  searchData: any[];
   offlineData: OfflineDataType[];
-  offlineChartData: DataItem[];
-  salesTypeData: DataItem[];
-  salesTypeDataOnline: DataItem[];
-  salesTypeDataOffline: DataItem[];
+  offlineChartData: any[];
+  salesTypeData: any[];
+  salesTypeDataOnline: any[];
+  salesTypeDataOffline: any[];
   radarData: RadarData[];
 }
 
@@ -221,8 +227,6 @@ export type MonitorTagType = {
   value: number;
   type: string;
 };
-
-export { DataItem };
 
 export interface TagType {
   key: string;
@@ -269,3 +273,4 @@ export interface StepDataType {
 }
 
 export type CurrentTypes = 'base' | 'confirm' | 'result';
+export type RangePickerValue = RangePickerProps['value'];

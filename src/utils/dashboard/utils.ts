@@ -1,7 +1,5 @@
-import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import dayjs from 'dayjs';
-
-type RangePickerValue = RangePickerProps<dayjs.Dayjs>['value'];
+import type { RangePickerValue } from '@/types';
 
 export function fixedZero(val: number) {
   return val * 1 < 10 ? `0${val}` : val;
