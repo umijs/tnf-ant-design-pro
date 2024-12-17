@@ -1,4 +1,4 @@
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { Card, Form, List, Typography } from 'antd';
 import dayjs from 'dayjs';

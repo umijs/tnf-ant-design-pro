@@ -9,7 +9,6 @@ import Exception from './Exception';
 import './Layout.css';
 import LogoIcon from './Logo';
 import { patchRoutes } from './patchRoutes';
-import { getRightRenderContent } from './rightRender';
 import route from './routes';
 
 const loginPath = '/user/login';
@@ -38,18 +37,13 @@ const mapRoutes = (routes: any[]) => {
   });
 };
 
-export default (props: any) => {
+export default () => {
   const location = useLocation();
   const navigate = useNavigate();
   if (isLoginPath(location.pathname)) {
     return <Outlet />;
   }
-  const initialInfo = {
-    initialState: undefined,
-    loading: false,
-    setInitialState: null,
-  };
-  const { initialState, loading, setInitialState } = initialInfo;
+
   const userConfig = {
     locale: false,
     navTheme: 'light',

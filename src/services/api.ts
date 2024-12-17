@@ -13,10 +13,55 @@ import type {
   Params,
 } from '@/types';
 
+const API_CONFIG = {
+  endpoints: {
+    currentUser: '/api/currentUser',
+    outLogin: '/api/login/outLogin',
+    login: '/api/login/account',
+    rule: '/api/rule',
+    profileBasic: '/api/profile/basic',
+    profileAdvanced: '/api/profile/advanced',
+    fakeList: '/api/fake_list',
+    getList: '/api/get_list',
+    postFakeList: '/api/post_fake_list',
+    cardFakeList: '/api/card_fake_list',
+    currentUserDetail: '/api/currentUserDetail',
+    fakeListDetail: '/api/fake_list_Detail',
+    accountSettingCurrentUser: '/api/accountSettingCurrentUser',
+    geographicProvince: '/api/geographic/province',
+    geographicCity: '/api/geographic/city',
+    users: '/api/users',
+    fakeAnalysisChartData: '/api/fake_analysis_chart_data',
+    tags: '/api/tags',
+    projectNotice: '/api/project/notice',
+    activities: '/api/activities',
+    fakeWorkplaceChartData: '/api/fake_workplace_chart_data',
+    advancedForm: '/api/advancedForm',
+    basicForm: '/api/basicForm',
+  },
+  headers: {
+    JSON: {
+      'Content-Type': 'application/json',
+    },
+  },
+  methods: {
+    POST: 'POST',
+    GET: 'GET',
+    PUT: 'PUT',
+    DELETE: 'DELETE',
+  },
+};
+
+const buildUrl = (endpoint: string, params?: Record<string, string>) => {
+  if (!params) return endpoint;
+  const query = new URLSearchParams(params).toString();
+  return `${endpoint}?${query}`;
+};
+
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
-  const response = await fetch('/api/currentUser', {
-    method: 'GET',
+  const response = await fetch(API_CONFIG.endpoints.currentUser, {
+    method: API_CONFIG.methods.GET,
     ...(options || {}),
   });
   return await response.json();
@@ -24,8 +69,8 @@ export async function currentUser(options?: { [key: string]: any }) {
 
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
-  return fetch('/api/login/outLogin', {
-    method: 'POST',
+  return fetch(API_CONFIG.endpoints.outLogin, {
+    method: API_CONFIG.methods.POST,
     ...(options || {}),
   });
 }
@@ -35,11 +80,9 @@ export async function login(
   body: API.LoginParams,
   options?: { [key: string]: any },
 ) {
-  const response = await fetch('/api/login/account', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await fetch(API_CONFIG.endpoints.login, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify(body),
     ...(options || {}),
   });
@@ -49,19 +92,14 @@ export async function login(
 /** 获取规则列表 GET /api/rule */
 export async function rule(
   params: {
-    // query
-    /** 当前的页码 */
     current?: number;
-    /** 页面的容量 */
     pageSize?: number;
   },
   options?: { [key: string]: any },
 ) {
-  const response = await fetch('/api/rule', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await fetch(API_CONFIG.endpoints.rule, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify(params),
     ...(options || {}),
   });
@@ -70,11 +108,9 @@ export async function rule(
 
 /** 更新规则 PUT /api/rule */
 export async function updateRule(options?: { [key: string]: any }) {
-  return fetch('/api/rule', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  return fetch(API_CONFIG.endpoints.rule, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       method: 'update',
       ...(options || {}),
@@ -84,11 +120,9 @@ export async function updateRule(options?: { [key: string]: any }) {
 
 /** 新建规则 POST /api/rule */
 export async function addRule(options?: { [key: string]: any }) {
-  return fetch('/api/rule', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  return fetch(API_CONFIG.endpoints.rule, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       method: 'post',
       ...(options || {}),
@@ -98,11 +132,9 @@ export async function addRule(options?: { [key: string]: any }) {
 
 /** 删除规则 DELETE /api/rule */
 export async function removeRule(options?: { [key: string]: any }) {
-  return fetch('/api/rule', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  return fetch(API_CONFIG.endpoints.rule, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       method: 'delete',
       ...(options || {}),
@@ -116,30 +148,32 @@ export async function queryBasicProfile(): Promise<{
     basicGoods: BasicGood[];
   };
 }> {
-  const response = await fetch('/api/profile/basic');
+  const response = await fetch(API_CONFIG.endpoints.profileBasic);
   return await response.json();
 }
 
 export async function queryAdvancedProfile() {
-  const response = await fetch('/api/profile/advanced');
+  const response = await fetch(API_CONFIG.endpoints.profileAdvanced);
   return await response.json();
 }
 
 export async function queryFakeList(
   params: Params,
 ): Promise<{ data: { list: ListItemDataType[] } }> {
-  const response = await fetch(
-    `/api/fake_list?${new URLSearchParams({ count: params.count.toString() })}`,
-  );
+  const url = buildUrl(API_CONFIG.endpoints.fakeList, {
+    count: params.count.toString(),
+  });
+  const response = await fetch(url);
   return await response.json();
 }
 
 export async function queryBasicList(
   params: Params,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  const response = await fetch(
-    `/api/get_list?${new URLSearchParams({ count: params.count.toString() })}`,
-  );
+  const url = buildUrl(API_CONFIG.endpoints.getList, {
+    count: params.count.toString(),
+  });
+  const response = await fetch(url);
   return await response.json();
 }
 
@@ -150,11 +184,9 @@ type ParamsType = {
 export async function removeFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  const response = await fetch('/api/post_fake_list', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await fetch(API_CONFIG.endpoints.postFakeList, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       ...params,
       method: 'delete',
@@ -166,11 +198,9 @@ export async function removeFakeList(
 export async function addFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  const response = await fetch('/api/post_fake_list', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await fetch(API_CONFIG.endpoints.postFakeList, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       ...params,
       method: 'post',
@@ -182,11 +212,9 @@ export async function addFakeList(
 export async function updateFakeList(
   params: ParamsType,
 ): Promise<{ data: { list: BasicListItemDataType[] } }> {
-  const response = await fetch('/api/post_fake_list', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await fetch(API_CONFIG.endpoints.postFakeList, {
+    method: API_CONFIG.methods.POST,
+    headers: API_CONFIG.headers.JSON,
     body: JSON.stringify({
       ...params,
       method: 'update',
@@ -198,91 +226,93 @@ export async function updateFakeList(
 export async function queryCardList(
   params: Params,
 ): Promise<{ data: { list: CardListItemDataType[] } }> {
-  const response = await fetch(
-    `/api/card_fake_list?${new URLSearchParams({ count: params.count.toString() })}`,
-  );
+  const url = buildUrl(API_CONFIG.endpoints.cardFakeList, {
+    count: params.count.toString(),
+  });
+  const response = await fetch(url);
   return await response.json();
 }
 
 export async function queryAccountCenterCurrent(): Promise<{
   data: CurrentUser;
 }> {
-  const response = await fetch('/api/currentUserDetail');
+  const response = await fetch(API_CONFIG.endpoints.currentUserDetail);
   return await response.json();
 }
 
 export async function queryAccountCenterFakeList(
   params: Params,
 ): Promise<{ data: { list: ListItemDataType[] } }> {
-  const newparams = new URLSearchParams({
+  const url = buildUrl(API_CONFIG.endpoints.fakeListDetail, {
     count: params.count.toString(),
   });
-  const response = await fetch(`/api/fake_list_Detail?${newparams}`);
+  const response = await fetch(url);
   return await response.json();
 }
 
 export async function queryCurrent(): Promise<{ data: CurrentUser }> {
-  const response = await fetch('/api/accountSettingCurrentUser');
+  const response = await fetch(API_CONFIG.endpoints.accountSettingCurrentUser);
   return await response.json();
 }
 
 export async function queryProvince(): Promise<{ data: GeographicItemType[] }> {
-  const response = await fetch('/api/geographic/province');
+  const response = await fetch(API_CONFIG.endpoints.geographicProvince);
   return await response.json();
 }
 
 export async function queryCity(
   province: string,
 ): Promise<{ data: GeographicItemType[] }> {
-  const response = await fetch(`/api/geographic/city/${province}`);
+  const url = `${API_CONFIG.endpoints.geographicCity}/${province}`;
+  const response = await fetch(url);
   return await response.json();
 }
 
 export async function query() {
-  const response = await fetch('/api/users');
+  const response = await fetch(API_CONFIG.endpoints.users);
   return await response.json();
 }
 
 export async function fakeDashboardAnalysisChartData(): Promise<{
   data: AnalysisData;
 }> {
-  const response = await fetch('/api/fake_analysis_chart_data');
+  const response = await fetch(API_CONFIG.endpoints.fakeAnalysisChartData);
   return await response.json();
 }
 
 export async function queryTags(): Promise<{
   data: { list: MonitorTagType[] };
 }> {
-  const response = await fetch('/api/tags');
+  const response = await fetch(API_CONFIG.endpoints.tags);
   return await response.json();
 }
 
 export async function queryProjectNotice(): Promise<{ data: NoticeType[] }> {
-  const response = await fetch('/api/project/notice');
+  const response = await fetch(API_CONFIG.endpoints.projectNotice);
   return await response.json();
 }
 
 export async function queryActivities(): Promise<{ data: ActivitiesType[] }> {
-  const response = await fetch('/api/activities');
+  const response = await fetch(API_CONFIG.endpoints.activities);
   return await response.json();
 }
 
 export async function fakeChartData(): Promise<{ data: AnalysisData }> {
-  const response = await fetch('/api/fake_workplace_chart_data');
+  const response = await fetch(API_CONFIG.endpoints.fakeWorkplaceChartData);
   return await response.json();
 }
 
 export async function fakeFormAdvancedSubmitForm(params: any) {
-  const response = await fetch('/api/advancedForm', {
-    method: 'POST',
+  const response = await fetch(API_CONFIG.endpoints.advancedForm, {
+    method: API_CONFIG.methods.POST,
     body: JSON.stringify(params),
   });
   return await response.json();
 }
 
 export async function fakeSubmitForm(params: any) {
-  const response = await fetch('/api/basicForm', {
-    method: 'POST',
+  const response = await fetch(API_CONFIG.endpoints.basicForm, {
+    method: API_CONFIG.methods.POST,
     body: JSON.stringify(params),
   });
   return await response.json();

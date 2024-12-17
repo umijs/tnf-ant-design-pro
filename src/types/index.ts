@@ -1,6 +1,4 @@
 import type { RangePickerProps } from 'antd/es/date-picker';
-import type { PickerProps } from 'antd/es/date-picker/generatePicker';
-import type dayjs from 'dayjs';
 
 export type BasicGood = {
   id: string;

@@ -1,7 +1,5 @@
 import { Column } from '@ant-design/plots';
 import { Card, Col, DatePicker, Row, Tabs } from 'antd';
-import type { PickerProps } from 'antd/es/date-picker/generatePicker';
-import type dayjs from 'dayjs';
 import numeral from 'numeral';
 import useStyles from '@/pages/dashboard.analysis.style';
 import type { RangePickerValue } from '@/types';
