@@ -57,6 +57,12 @@ const AvatarList: React.FC<AvatarListProps> & {
   Item: typeof Item;
 } = ({ children, size, maxLength = 5, excessItemsStyle, ...other }) => {
   const { styles } = useStyles();
+  const avatarSizeToClassName = (size?: SizeType | 'mini') =>
+    classNames(styles.avatarItem, {
+      [styles.avatarItemLarge]: size === 'large',
+      [styles.avatarItemSmall]: size === 'small',
+      [styles.avatarItemMini]: size === 'mini',
+    });
   const numOfChildren = React.Children.count(children);
   const numToShow = maxLength >= numOfChildren ? numOfChildren : maxLength;
   const childrenArray = React.Children.toArray(

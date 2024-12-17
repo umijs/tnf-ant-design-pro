@@ -4,7 +4,7 @@ import type { PickerProps } from 'antd/es/date-picker/generatePicker';
 import type dayjs from 'dayjs';
 import numeral from 'numeral';
 import useStyles from '@/pages/dashboard.analysis.style';
-import type { DataItem } from '@/types';
+import type { RangePickerValue } from '@/types';
 
 export type TimeType = 'today' | 'week' | 'month' | 'year';
 const { RangePicker } = DatePicker;
@@ -29,11 +29,11 @@ const SalesCard = ({
   loading,
   selectDate,
 }: {
-  rangePickerValue: PickerProps<dayjs.Dayjs>['value'];
+  rangePickerValue: RangePickerValue;
   isActive: (key: TimeType) => string;
-  salesData: DataItem[];
+  salesData: any[];
   loading: boolean;
-  handleRangePickerChange: PickerProps<dayjs.Dayjs>['onChange'];
+  handleRangePickerChange: (dates: RangePickerValue) => void;
   selectDate: (key: TimeType) => void;
 }) => {
   const { styles } = useStyles();
