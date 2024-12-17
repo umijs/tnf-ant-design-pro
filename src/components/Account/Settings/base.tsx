@@ -79,7 +79,6 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
             ...currentUser,
             phone: (currentUser?.phone || '').split('-'),
           }}
-          hideRequiredMark
         >
           <ProFormText
             width="md"

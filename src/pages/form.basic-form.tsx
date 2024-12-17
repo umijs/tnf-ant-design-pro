@@ -15,7 +15,37 @@ import { Card, message } from 'antd';
 import { fakeSubmitForm } from '@/services/api';
 import useStyles from './form.basic-form.style';
 
-const BasicForm: React.FC<Record<string, any>> = () => {
+const PUBLICTYPE_OPTIONS = [
+  {
+    value: '1',
+    label: '公开',
+  },
+  {
+    value: '2',
+    label: '部分公开',
+  },
+  {
+    value: '3',
+    label: '不公开',
+  },
+];
+
+const PUBLICUSERS_OPTIONS = [
+  {
+    value: '1',
+    label: '同事甲',
+  },
+  {
+    value: '2',
+    label: '同事乙',
+  },
+  {
+    value: '3',
+    label: '同事丙',
+  },
+];
+
+const BasicForm: React.FC = () => {
   const { styles } = useStyles();
   const onFinish = async (values: Record<string, any>) => {
     await fakeSubmitForm(values);
@@ -25,12 +55,7 @@ const BasicForm: React.FC<Record<string, any>> = () => {
     <PageContainer content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
       <Card bordered={false}>
         <ProForm
-          hideRequiredMark
-          style={{
-            margin: 'auto',
-            marginTop: 8,
-            maxWidth: 600,
-          }}
+          className={styles.proform}
           name="basic"
           layout="vertical"
           initialValues={{
@@ -132,20 +157,7 @@ const BasicForm: React.FC<Record<string, any>> = () => {
           />
 
           <ProFormRadio.Group
-            options={[
-              {
-                value: '1',
-                label: '公开',
-              },
-              {
-                value: '2',
-                label: '部分公开',
-              },
-              {
-                value: '3',
-                label: '不公开',
-              },
-            ]}
+            options={PUBLICTYPE_OPTIONS}
             label="目标公开"
             help="客户、邀评人默认被分享"
             name="publicType"
@@ -163,20 +175,7 @@ const BasicForm: React.FC<Record<string, any>> = () => {
                         publicType && publicType === '2' ? 'block' : 'none',
                     },
                   }}
-                  options={[
-                    {
-                      value: '1',
-                      label: '同事甲',
-                    },
-                    {
-                      value: '2',
-                      label: '同事乙',
-                    },
-                    {
-                      value: '3',
-                      label: '同事丙',
-                    },
-                  ]}
+                  options={PUBLICUSERS_OPTIONS}
                 />
               );
             }}
