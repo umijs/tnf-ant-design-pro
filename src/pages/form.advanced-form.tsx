@@ -64,7 +64,19 @@ interface ErrorField {
   name: InternalNamePath;
   errors: string[];
 }
-const AdvancedForm: FC<Record<string, any>> = () => {
+
+const TYPE_OPTIONS = [
+  {
+    label: '私密',
+    value: 'private',
+  },
+  {
+    label: '公开',
+    value: 'public',
+  },
+];
+
+const AdvancedForm: FC = () => {
   const { styles } = useStyles();
   const [error, setError] = useState<ErrorField[]>([]);
   const getErrorInfo = (errors: ErrorField[]) => {
@@ -173,7 +185,6 @@ const AdvancedForm: FC<Record<string, any>> = () => {
   return (
     <ProForm
       layout="vertical"
-      hideRequiredMark
       submitter={{
         render: (props, dom) => {
           return (
@@ -349,16 +360,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
                     message: '请选择仓库类型',
                   },
                 ]}
-                options={[
-                  {
-                    label: '私密',
-                    value: 'private',
-                  },
-                  {
-                    label: '公开',
-                    value: 'public',
-                  },
-                ]}
+                options={TYPE_OPTIONS}
                 placeholder="请选择仓库类型"
               />
             </Col>
@@ -513,16 +515,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
                     message: '请选择仓库类型',
                   },
                 ]}
-                options={[
-                  {
-                    label: '私密',
-                    value: 'private',
-                  },
-                  {
-                    label: '公开',
-                    value: 'public',
-                  },
-                ]}
+                options={TYPE_OPTIONS}
                 placeholder="请选择仓库类型"
               />
             </Col>

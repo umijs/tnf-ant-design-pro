@@ -18,7 +18,7 @@ import useStyles from './dashboard.analysis.style';
 
 type SalesType = 'all' | 'online' | 'stores';
 
-function Analysis() {
+const Analysis: React.FC = () => {
   const { styles } = useStyles();
   const [salesType, setSalesType] = useState<SalesType>('all');
   const [currentTabKey, setCurrentTabKey] = useState('');
@@ -142,7 +142,7 @@ function Analysis() {
       </>
     </GridContent>
   );
-}
+};
 
 export const Route = createFileRoute('/dashboard/analysis')({
   component: Analysis,

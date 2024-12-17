@@ -76,7 +76,7 @@ const PageHeaderContent: FC<{
     </div>
   );
 };
-const ExtraContent: FC<Record<string, any>> = () => {
+const ExtraContent: FC = () => {
   const { styles } = useStyles();
   return (
     <div className={styles.extraContent}>
