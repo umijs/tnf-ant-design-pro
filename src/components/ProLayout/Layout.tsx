@@ -7,7 +7,7 @@ import { Footer, Question } from '../';
 import { outLogin } from '../../services/api';
 import Exception from './Exception';
 import './Layout.css';
-import Logo from './Logo';
+import LogoIcon from './Logo';
 import { patchRoutes } from './patchRoutes';
 import { getRightRenderContent } from './rightRender';
 import route from './routes';
@@ -139,7 +139,7 @@ export default (props: any) => {
       }}
       formatMessage={formatMessage}
       menu={{ locale: false }}
-      logo={Logo}
+      logo={<LogoIcon />}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
@@ -162,7 +162,7 @@ export default (props: any) => {
         const label = title || breadcrumbName;
         const last = routes[routes.length - 1];
         if (last) {
-          if (last.path === path || last.linkPath === path) {
+          if (last.path === path) {
             return <span>{label}</span>;
           }
         }
@@ -193,45 +193,12 @@ export default (props: any) => {
           );
         },
       }}
-      disableContentMargin
       fixSiderbar
       fixedHeader
       {...runtimeConfig}
-      rightContentRender={
-        runtimeConfig.rightContentRender !== false &&
-        ((layoutProps) => {
-          const dom = getRightRenderContent({
-            runtimeConfig,
-            loading,
-            initialState,
-            setInitialState,
-          });
-          if (runtimeConfig.rightContentRender) {
-            return runtimeConfig.rightContentRender(layoutProps, dom, {
-              // BREAK CHANGE userConfig > runtimeConfig
-              userConfig,
-              runtimeConfig,
-              loading,
-              initialState,
-              setInitialState,
-            });
-          }
-          return dom;
-        })
-      }
     >
-      <Exception
-        route={route}
-        noFound={runtimeConfig?.noFound}
-        notFound={runtimeConfig?.notFound}
-        unAccessible={runtimeConfig?.unAccessible}
-        noAccessible={runtimeConfig?.noAccessible}
-      >
-        {runtimeConfig.childrenRender ? (
-          runtimeConfig.childrenRender(<Outlet />, props)
-        ) : (
-          <Outlet />
-        )}
+      <Exception route={route}>
+        <Outlet />
       </Exception>
     </ProLayout>
   );
