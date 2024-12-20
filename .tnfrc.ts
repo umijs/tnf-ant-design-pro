@@ -8,4 +8,7 @@ export default {
   mock: {
     delay: '500-1000',
   },
+  clickToComponent: {
+    editor: 'cursor',
+  },
 };

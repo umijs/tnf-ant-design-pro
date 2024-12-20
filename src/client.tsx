@@ -2,6 +2,7 @@ import { createRouter } from '@umijs/tnf/router';
 import { Client } from '@umijs/tnf/ssr';
 import { Spin } from 'antd';
 import { routeTree } from '../.tnf/routeTree.gen';
+import './i18n/config';
 
 export function createApp() {
   const router = createRouter({

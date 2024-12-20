@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Area, Column } from '@ant-design/plots';
 import { Col, Progress, Row, Tooltip } from 'antd';
@@ -25,15 +26,16 @@ const IntroduceRow = ({
   loading: boolean;
   visitData: DataItem[];
 }) => {
+  const { t } = useTranslation();
   const { styles } = useStyles();
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
         <ChartCard
           bordered={false}
-          title="总销售额"
+          title={t('totalSales')}
           action={
-            <Tooltip title="指标说明">
+            <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
             </Tooltip>
           }
@@ -41,7 +43,7 @@ const IntroduceRow = ({
           total={() => <Yuan>126560</Yuan>}
           footer={
             <Field
-              label="日销售额"
+              label={t('daySales')}
               value={`￥${numeral(12423).format('0,0')}`}
             />
           }
@@ -53,11 +55,11 @@ const IntroduceRow = ({
               marginRight: 16,
             }}
           >
-            周同比
+            {t('weeklyYoY')}
             <span className={styles.trendText}>12%</span>
           </Trend>
           <Trend flag="down">
-            日同比
+            {t('dailyYoY')}
             <span className={styles.trendText}>11%</span>
           </Trend>
         </ChartCard>
@@ -67,15 +69,18 @@ const IntroduceRow = ({
         <ChartCard
           bordered={false}
           loading={loading}
-          title="访问量"
+          title={t('visits')}
           action={
-            <Tooltip title="指标说明">
+            <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
             </Tooltip>
           }
           total={numeral(8846).format('0,0')}
           footer={
-            <Field label="日访问量" value={numeral(1234).format('0,0')} />
+            <Field
+              label={t('dailyVisits')}
+              value={numeral(1234).format('0,0')}
+            />
           }
           contentHeight={46}
         >
@@ -101,7 +106,7 @@ const IntroduceRow = ({
           loading={loading}
           title="支付笔数"
           action={
-            <Tooltip title="指标说明">
+            <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
             </Tooltip>
           }
@@ -126,7 +131,7 @@ const IntroduceRow = ({
           bordered={false}
           title="运营活动效果"
           action={
-            <Tooltip title="指标说明">
+            <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
             </Tooltip>
           }
