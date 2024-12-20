@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from '@umijs/tnf/router';
 import { LogoutOutlined } from '@ant-design/icons';
 import { ProLayout } from '@ant-design/pro-components';
@@ -8,6 +7,7 @@ import { outLogin } from '../../services/api';
 import Exception from './Exception';
 import './Layout.css';
 import LogoIcon from './Logo';
+import SelectLang from './SelectLang';
 import { patchRoutes } from './patchRoutes';
 import route from './routes';
 
@@ -61,7 +61,10 @@ export default () => {
   };
   const formatMessage = undefined;
   const runtimeConfig = {
-    actionsRender: () => [<Question key="doc" />],
+    actionsRender: () => [
+      <Question key="doc" />,
+      <SelectLang key="SelectLang" />,
+    ],
     footerRender: () => <Footer />,
     onPageChange: () => {
       // FIXME: userInfo
