@@ -1,9 +1,4 @@
-import {
-  Link,
-  Outlet,
-  createFileRoute,
-  useLocation
-} from '@umijs/tnf/router';
+import { Link, Outlet, createFileRoute, useLocation } from '@umijs/tnf/router';
 import { PageContainer } from '@ant-design/pro-components';
 import { Input } from 'antd';
 
@@ -25,8 +20,7 @@ const tabList = [
 export const Route = createFileRoute('/list/search')({
   component: () => {
     const { pathname } = useLocation();
-    let tabActiveKey = pathname.split('/').pop() as string;
-    const handleFormSubmit = (value: string) => {};
+    const tabActiveKey = pathname.split('/').pop() as string;
 
     return (
       <PageContainer
@@ -36,7 +30,6 @@ export const Route = createFileRoute('/list/search')({
               placeholder="请输入"
               enterButton="搜索"
               size="large"
-              onSearch={handleFormSubmit}
               style={{ maxWidth: 522, width: '100%' }}
             />
           </div>

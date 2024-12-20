@@ -1,6 +1,17 @@
 {
   "extends": "./.tnf/tsconfig.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "paths": {
+      "@": ["./src"],
+      "@/*": ["./src/*"],
+      "react": ["./node_modules/@types/react"],
+      "react-dom": ["./node_modules/@types/react-dom"],
+      "@tanstack/react-router": [
+        "./node_modules/.pnpm/@tanstack+react-router@1.85.4_@tanstack+router-generator@1.85.3_react-dom@18.3.1_react@18.3.1/node_modules/@tanstack/react-router"
+      ]
+    }
+  }
 
   // If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
   // from the referenced tsconfig.json - TypeScript does not merge them in

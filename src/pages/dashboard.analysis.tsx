@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createFileRoute } from '@umijs/tnf/router';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { GridContent } from '@ant-design/pro-components';
 import { Col, Dropdown, Row } from 'antd';
-import type { PickerProps } from 'antd/es/date-picker/generatePicker';
 import type { RadioChangeEvent } from 'antd/es/radio';
 import type dayjs from 'dayjs';
 import IntroduceRow from '@/components/Dashboard/Analysis/IntroduceRow';
@@ -13,10 +12,10 @@ import type { TimeType } from '@/components/Dashboard/Analysis/SalesCard';
 import SalesCard from '@/components/Dashboard/Analysis/SalesCard';
 import TopSearch from '@/components/Dashboard/Analysis/TopSearch';
 import { fakeDashboardAnalysisChartData } from '@/services/api';
+import type { RangePickerValue } from '@/types';
 import { getTimeDistance } from '@/utils/dashboard/utils';
 import useStyles from './dashboard.analysis.style';
 
-type RangePickerValue = PickerProps<dayjs.Dayjs>['value'];
 type SalesType = 'all' | 'online' | 'stores';
 
 function Analysis() {

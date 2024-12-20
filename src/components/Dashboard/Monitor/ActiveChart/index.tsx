@@ -7,7 +7,7 @@ function fixedZero(val: number) {
   return val * 1 < 10 ? `0${val}` : val;
 }
 function getActiveData() {
-  const activeData = [];
+  const activeData: { x: string; y: number }[] = [];
   for (let i = 0; i < 24; i += 1) {
     activeData.push({
       x: `${fixedZero(i)}:00`,
