@@ -10,6 +10,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button, Input, Upload, message } from 'antd';
 import { queryCity, queryProvince } from '@/services/api';
+import type { CurrentUser } from '@/types';
 import useStyles from './index.style';
 
 const validatorPhone = (
@@ -27,7 +28,7 @@ const validatorPhone = (
 };
 
 interface BaseViewProps {
-  currentUser: API.CurrentUser;
+  currentUser: CurrentUser;
 }
 const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
   const { styles } = useStyles();
@@ -76,7 +77,7 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
           }}
           initialValues={{
             ...currentUser,
-            phone: currentUser?.phone.split('-'),
+            phone: (currentUser?.phone || '').split('-'),
           }}
           hideRequiredMark
         >
@@ -144,7 +145,6 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
                 labelInValue: true,
               }}
               name="province"
-              className={styles.item}
               request={async () => {
                 return queryProvince().then(({ data }) => {
                   return data.map((item) => {
@@ -172,7 +172,6 @@ const BaseView: React.FC<BaseViewProps> = ({ currentUser }) => {
                       },
                     ]}
                     disabled={!province}
-                    className={styles.item}
                     request={async () => {
                       if (!province?.key) {
                         return [];

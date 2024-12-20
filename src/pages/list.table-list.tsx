@@ -186,7 +186,9 @@ const TableList: React.FC = () => {
   const loading = useRouterState({ select: (s) => s.isLoading });
 
   useEffect(() => {
-    formRef?.current.setFieldsValue(search);
+    if (formRef.current) {
+      formRef.current.setFieldsValue(search);
+    }
   }, [formRef, search]);
 
   return (

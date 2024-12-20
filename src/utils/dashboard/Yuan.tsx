@@ -3,7 +3,7 @@ import { yuan } from '@/components/Dashboard/Analysis/Charts';
 
 /** 减少使用 dangerouslySetInnerHTML */
 export default class Yuan extends React.Component<{
-  children: React.ReactText;
+  children;
 }> {
   main: HTMLSpanElement | undefined | null = null;
 
