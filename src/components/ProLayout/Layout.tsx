@@ -9,6 +9,7 @@ import { outLogin } from '../../services/api';
 import Exception from './Exception';
 import './Layout.css';
 import Logo from './Logo';
+import SelectLang from './SelectLang';
 import { patchRoutes } from './patchRoutes';
 import { getRightRenderContent } from './rightRender';
 import route from './routes';
@@ -68,7 +69,10 @@ export default (props: any) => {
   };
   const formatMessage = undefined;
   const runtimeConfig = {
-    actionsRender: () => [<Question key="doc" />],
+    actionsRender: () => [
+      <Question key="doc" />,
+      <SelectLang key="SelectLang" />,
+    ],
     footerRender: () => <Footer />,
     onPageChange: () => {
       // FIXME: userInfo
