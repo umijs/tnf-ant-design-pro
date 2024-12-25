@@ -1,0 +1,22 @@
+{
+  "totalSales": "Total Sales",
+  "indicatorDescription": "Indicator Description",
+  "dailySales": "Daily Sales",
+  "weeklyYoY": "Weekly YoY",
+  "dailyYoY": "Daily YoY",
+  "visits": "Visits",
+  "dailyVisits": "Daily Visits",
+  "daySales": "Day Sales",
+  "numberOfPayments": "Number of Payments",
+  "conversionRate": "Conversion Rate",
+  "campaignEffect": "Campaign Effect",
+  "today": "Today",
+  "week": "Week",
+  "month": "Month",
+  "year": "Year",
+  "sales": "Sales",
+  "salesProportion": "Sales Proportion",
+  "storeSalesRanking": "Store Sales Ranking",
+  "visitsRanking": "Visits Ranking",
+  "storeName": "No. {{number}} Gongzhuan Road Store"
+}

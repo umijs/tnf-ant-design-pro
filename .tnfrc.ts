@@ -1,4 +1,6 @@
-export default {
+import { defineConfig } from '@umijs/tnf';
+
+export default defineConfig({
   router: {
     defaultPreload: 'intent',
     convention: {
@@ -8,4 +10,4 @@ export default {
   mock: {
     delay: '500-1000',
   },
-};
+});
