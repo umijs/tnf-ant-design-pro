@@ -12,7 +12,7 @@ import Logo from './Logo';
 import SelectLang from './SelectLang';
 import { patchRoutes } from './patchRoutes';
 import { getRightRenderContent } from './rightRender';
-import route from './routes';
+import { getRoutes } from './routes';
 
 const loginPath = '/user/login';
 
@@ -43,6 +43,8 @@ const mapRoutes = (routes: any[]) => {
 export default (props: any) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const route = getRoutes();
+
   if (isLoginPath(location.pathname)) {
     return <Outlet />;
   }

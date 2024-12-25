@@ -1,0 +1,22 @@
+{
+  "totalSales": "总销售额",
+  "indicatorDescription": "指标说明",
+  "dailySales": "日销售额",
+  "weeklyYoY": "周同比",
+  "dailyYoY": "日同比",
+  "visits": "访问量",
+  "dailyVisits": "日访问量",
+  "daySales": "日销售额",
+  "numberOfPayments": "支付笔数",
+  "conversionRate": "转化率",
+  "campaignEffect": "运营活动效果",
+  "today": "今日",
+  "week": "本周",
+  "month": "本月",
+  "year": "本年",
+  "sales": "销售额",
+  "salesProportion": "销售额类别占比",
+  "storeSalesRanking": "门店销售额排名",
+  "visitsRanking": "门店访问量排名",
+  "storeName": "工专路 {{number}} 号店"
+}

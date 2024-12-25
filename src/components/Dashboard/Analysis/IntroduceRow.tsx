@@ -26,7 +26,7 @@ const IntroduceRow = ({
   loading: boolean;
   visitData: DataItem[];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('dashboard');
   const { styles } = useStyles();
   return (
     <Row gutter={24}>
@@ -104,14 +104,14 @@ const IntroduceRow = ({
         <ChartCard
           bordered={false}
           loading={loading}
-          title="支付笔数"
+          title={t('numberOfPayments')}
           action={
             <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
             </Tooltip>
           }
           total={numeral(6560).format('0,0')}
-          footer={<Field label="转化率" value="60%" />}
+          footer={<Field label={t('conversionRate')} value="60%" />}
           contentHeight={46}
         >
           <Column
@@ -129,7 +129,7 @@ const IntroduceRow = ({
         <ChartCard
           loading={loading}
           bordered={false}
-          title="运营活动效果"
+          title={t('campaignEffect')}
           action={
             <Tooltip title={t('indicatorDescription')}>
               <InfoCircleOutlined />
@@ -149,11 +149,11 @@ const IntroduceRow = ({
                   marginRight: 16,
                 }}
               >
-                周同比
+                {t('weeklyYoY')}
                 <span className={styles.trendText}>12%</span>
               </Trend>
               <Trend flag="down">
-                日同比
+                {t('dailyYoY')}
                 <span className={styles.trendText}>11%</span>
               </Trend>
             </div>

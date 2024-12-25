@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pie } from '@ant-design/plots';
 import { Card, Radio, Typography } from 'antd';
 import type { RadioChangeEvent } from 'antd/es/radio';
@@ -20,13 +21,14 @@ const ProportionSales = ({
   salesPieData: DataItem[];
   handleChangeSalesType?: (e: RadioChangeEvent) => void;
 }) => {
+  const { t } = useTranslation('dashboard');
   const { styles } = useStyles();
   return (
     <Card
       loading={loading}
       className={styles.salesCard}
       bordered={false}
-      title="销售额类别占比"
+      title={t('salesProportion')}
       style={{
         height: '100%',
       }}
@@ -44,7 +46,7 @@ const ProportionSales = ({
       }
     >
       <div>
-        <Text>销售额</Text>
+        <Text>{t('sales')}</Text>
         <Pie
           height={340}
           radius={0.8}

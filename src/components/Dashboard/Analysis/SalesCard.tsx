@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Column } from '@ant-design/plots';
 import { Card, Col, DatePicker, Row, Tabs } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
@@ -8,18 +9,6 @@ import type { DataItem } from '@/types';
 
 export type TimeType = 'today' | 'week' | 'month' | 'year';
 const { RangePicker } = DatePicker;
-
-const rankingListData: {
-  title: string;
-  total: number;
-}[] = [];
-
-for (let i = 0; i < 7; i += 1) {
-  rankingListData.push({
-    title: `工专路 ${i} 号店`,
-    total: 323234,
-  });
-}
 
 const SalesCard = ({
   rangePickerValue,
@@ -36,7 +25,20 @@ const SalesCard = ({
   handleRangePickerChange: RangePickerProps<dayjs.Dayjs>['onChange'];
   selectDate: (key: TimeType) => void;
 }) => {
+  const { t } = useTranslation('dashboard');
   const { styles } = useStyles();
+
+  const rankingListData: {
+    title: string;
+    total: number;
+  }[] = [];
+  for (let i = 0; i < 7; i += 1) {
+    rankingListData.push({
+      title: t('storeName', { number: i }),
+      total: 323234,
+    });
+  }
+
   return (
     <Card
       loading={loading}
@@ -54,25 +56,25 @@ const SalesCard = ({
                   className={isActive('today')}
                   onClick={() => selectDate('today')}
                 >
-                  今日
+                  {t('today')}
                 </a>
                 <a
                   className={isActive('week')}
                   onClick={() => selectDate('week')}
                 >
-                  本周
+                  {t('week')}
                 </a>
                 <a
                   className={isActive('month')}
                   onClick={() => selectDate('month')}
                 >
-                  本月
+                  {t('month')}
                 </a>
                 <a
                   className={isActive('year')}
                   onClick={() => selectDate('year')}
                 >
-                  本年
+                  {t('year')}
                 </a>
               </div>
               <RangePicker
@@ -91,7 +93,7 @@ const SalesCard = ({
           items={[
             {
               key: 'sales',
-              label: '销售额',
+              label: t('sales'),
               children: (
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
@@ -124,10 +126,12 @@ const SalesCard = ({
                   </Col>
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>门店销售额排名</h4>
+                      <h4 className={styles.rankingTitle}>
+                        {t('storeSalesRanking')}
+                      </h4>
                       <ul className={styles.rankingList}>
                         {rankingListData.map((item, i) => (
-                          <li key={item.title}>
+                          <li key={i}>
                             <span
                               className={`${styles.rankingItemNumber} ${
                                 i < 3 ? styles.rankingItemNumberActive : ''
@@ -152,7 +156,7 @@ const SalesCard = ({
             },
             {
               key: 'views',
-              label: '访问量',
+              label: t('visits'),
               children: (
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
@@ -175,7 +179,7 @@ const SalesCard = ({
                           x: { paddingInner: 0.4 },
                         }}
                         tooltip={{
-                          name: '访问量',
+                          name: t('visits'),
                           channel: 'y',
                         }}
                       />
@@ -183,10 +187,12 @@ const SalesCard = ({
                   </Col>
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>门店访问量排名</h4>
+                      <h4 className={styles.rankingTitle}>
+                        {t('visitsRanking')}
+                      </h4>
                       <ul className={styles.rankingList}>
                         {rankingListData.map((item, i) => (
-                          <li key={item.title}>
+                          <li key={i}>
                             <span
                               className={`${
                                 i < 3
